@@ -1,0 +1,100 @@
+
+
+Microchip MPLAB XC8 Assembler V2.32 build 20210201212658 
+                                                                                                           Tue Mar 01 10:26:24 2022
+
+
+     1                           	processor	18F87K22
+     2                           	pagewidth 132
+     3                           	psect	udata_acs,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     4                           	psect	udata_bank0,global,class=BANK0,space=1,delta=1,lowdata,noexec
+     5                           	psect	udata_bank1,global,class=BANK1,space=1,delta=1,lowdata,noexec
+     6                           	psect	udata_bank2,global,class=BANK2,space=1,delta=1,lowdata,noexec
+     7                           	psect	udata_bank3,global,class=BANK3,space=1,delta=1,lowdata,noexec
+     8                           	psect	udata_bank4,global,class=BANK4,space=1,delta=1,lowdata,noexec
+     9                           	psect	udata_bank5,global,class=BANK5,space=1,delta=1,lowdata,noexec
+    10                           	psect	udata_bank6,global,class=BANK6,space=1,delta=1,lowdata,noexec
+    11                           	psect	udata_bank7,global,class=BANK7,space=1,delta=1,lowdata,noexec
+    12                           	psect	udata_bank8,global,class=BANK8,space=1,delta=1,lowdata,noexec
+    13                           	psect	udata_bank9,global,class=BANK9,space=1,delta=1,lowdata,noexec
+    14                           	psect	udata_bank10,global,class=BANK10,space=1,delta=1,lowdata,noexec
+    15                           	psect	udata_bank11,global,class=BANK11,space=1,delta=1,lowdata,noexec
+    16                           	psect	udata_bank12,global,class=BANK12,space=1,delta=1,lowdata,noexec
+    17                           	psect	udata_bank13,global,class=BANK13,space=1,delta=1,lowdata,noexec
+    18                           	psect	udata_bank14,global,class=BANK14,space=1,delta=1,lowdata,noexec
+    19                           	psect	udata_bank15,global,class=BANK15,space=1,delta=1,lowdata,noexec
+    20                           	psect	udata,global,class=RAM,space=1,delta=1,noexec
+    21                           	psect	code,global,abs,reloc=2,class=CODE,delta=1
+    22                           	psect	data,global,reloc=2,class=CONST,delta=1,noexec
+    23                           	psect	edata,global,class=EEDATA,space=3,delta=2,noexec
+    24  0000                     
+    25                           	psect	code
+    26  000000                     rst:
+    27  000000                     	org	0	; reset vector
+    28  000000  EF06  F000         	goto	start
+    29  000008                     	org	8	; high vector, no low vector
+    30  000008  EFF4  F0FF         	goto	DAC_Int_Hi
+    31  00000C                     start:
+    32  00000C  ECF9  F0FF         	call	DAC_Setup
+    33  000010  EF08  F000         	goto	$	; Sit in infinite loop
+    34                           
+    35                           	psect	edata
+    36  0000                     stk_offset	set	0
+    37  0000                     auto_size	set	0
+    38                           
+    39                           ; stack_auto defines a symbol /name/_offset which equates to the
+    40                           ; stack offset of the auto object in question
+    41  000000                     
+    42                           ; stack_param defines a symbol /name/_offset which equates to the
+    43                           ; stack offset of the parameter object in question
+    44  000000                     
+    45                           ; alloc_stack adjusts the SP to allocate space for auto objects
+    46                           ; it also links in to the btemp symbol so that can be used
+    47  000000                     
+    48                           ; restore_stack adjusts the SP to remove all auto and parameter
+    49                           ; objects from the stack prior to returning from a function
+    50  000000                     tosu	equ	0xFFF
+    51                           tosh	equ	0xFFE
+    52                           tosl	equ	0xFFD
+    53                           stkptr	equ	0xFFC
+    54                           pclatu	equ	0xFFB
+    55                           pclath	equ	0xFFA
+    56                           pcl	equ	0xFF9
+    57                           tblptru	equ	0xFF8
+    58                           tblptrh	equ	0xFF7
+    59                           tblptrl	equ	0xFF6
+    60                           tablat	equ	0xFF5
+    61                           prodh	equ	0xFF4
+    62                           prodl	equ	0xFF3
+    63                           indf0	equ	0xFEF
+    64                           postinc0	equ	0xFEE
+    65                           postdec0	equ	0xFED
+    66                           preinc0	equ	0xFEC
+    67                           plusw0	equ	0xFEB
+    68                           fsr0h	equ	0xFEA
+    69                           fsr0l	equ	0xFE9
+    70                           wreg	equ	0xFE8
+    71                           indf1	equ	0xFE7
+    72                           postinc1	equ	0xFE6
+    73                           postdec1	equ	0xFE5
+    74                           preinc1	equ	0xFE4
+    75                           plusw1	equ	0xFE3
+    76                           fsr1h	equ	0xFE2
+    77                           fsr1l	equ	0xFE1
+    78                           bsr	equ	0xFE0
+    79                           indf2	equ	0xFDF
+    80                           postinc2	equ	0xFDE
+    81                           postdec2	equ	0xFDD
+    82                           preinc2	equ	0xFDC
+    83                           plusw2	equ	0xFDB
+    84                           fsr2h	equ	0xFDA
+    85                           fsr2l	equ	0xFD9
+    86                           status	equ	0xFD8
+
+
+Microchip Technology PIC18 Macro Assembler V2.32 build 20210201212658 
+Symbol Table                                                                                               Tue Mar 01 10:26:24 2022
+
+                             rst 0000                             start 000C                            int_hi 0004  
+                      DAC_Int_Hi FFE8                           isa$std 000001                         DAC_Setup FFF2  
+                       isa$xinst 000000  
