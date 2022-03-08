@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=MicroprocessorsLab
+PROJECTNAME=light-control-system
 
 # Active Configuration
 DEFAULTCONF=default

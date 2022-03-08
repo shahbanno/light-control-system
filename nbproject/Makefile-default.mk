@@ -30,12 +30,12 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
 OUTPUT_SUFFIX=hex
 DEBUGGABLE_SUFFIX=elf
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/MicroprocessorsLab.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/light-control-system.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 else
 IMAGE_TYPE=production
 OUTPUT_SUFFIX=hex
 DEBUGGABLE_SUFFIX=elf
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/MicroprocessorsLab.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/light-control-system.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 endif
 
 ifeq ($(COMPARE_BUILD), true)
@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=LCD.S ACD.s UART.s main.s config.s
+SOURCEFILES_QUOTED_IF_SPACED=LCD.S ACD.s UART.s main.s config.s DAC_Interrupt.s
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/LCD.o ${OBJECTDIR}/ACD.o ${OBJECTDIR}/UART.o ${OBJECTDIR}/main.o ${OBJECTDIR}/config.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/ACD.o.d ${OBJECTDIR}/UART.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/config.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/LCD.o ${OBJECTDIR}/ACD.o ${OBJECTDIR}/UART.o ${OBJECTDIR}/main.o ${OBJECTDIR}/config.o ${OBJECTDIR}/DAC_Interrupt.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/ACD.o.d ${OBJECTDIR}/UART.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/config.o.d ${OBJECTDIR}/DAC_Interrupt.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/LCD.o ${OBJECTDIR}/ACD.o ${OBJECTDIR}/UART.o ${OBJECTDIR}/main.o ${OBJECTDIR}/config.o
+OBJECTFILES=${OBJECTDIR}/LCD.o ${OBJECTDIR}/ACD.o ${OBJECTDIR}/UART.o ${OBJECTDIR}/main.o ${OBJECTDIR}/config.o ${OBJECTDIR}/DAC_Interrupt.o
 
 # Source Files
-SOURCEFILES=LCD.S ACD.s UART.s main.s config.s
+SOURCEFILES=LCD.S ACD.s UART.s main.s config.s DAC_Interrupt.s
 
 
 
@@ -88,7 +88,7 @@ FIXDEPS=fixDeps
 ifneq ($(INFORMATION_MESSAGE), )
 	@echo $(INFORMATION_MESSAGE)
 endif
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/MicroprocessorsLab.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/light-control-system.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=PIC18F87K22
 # ------------------------------------------------------------------------------------
@@ -134,6 +134,14 @@ ${OBJECTDIR}/config.o: config.s  nbproject/Makefile-${CND_CONF}.mk
 	config.s \
 	 -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
 	
+${OBJECTDIR}/DAC_Interrupt.o: DAC_Interrupt.s  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/DAC_Interrupt.o 
+	${MP_AS} -mcpu=PIC18F87K22 -c \
+	-o ${OBJECTDIR}/DAC_Interrupt.o \
+	DAC_Interrupt.s \
+	 -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
+	
 else
 ${OBJECTDIR}/LCD.o: LCD.S  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
@@ -175,21 +183,29 @@ ${OBJECTDIR}/config.o: config.s  nbproject/Makefile-${CND_CONF}.mk
 	config.s \
 	 -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
 	
+${OBJECTDIR}/DAC_Interrupt.o: DAC_Interrupt.s  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/DAC_Interrupt.o 
+	${MP_AS} -mcpu=PIC18F87K22 -c \
+	-o ${OBJECTDIR}/DAC_Interrupt.o \
+	DAC_Interrupt.s \
+	 -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
+	
 endif
 
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: pic-as-linker
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/MicroprocessorsLab.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
+dist/${CND_CONF}/${IMAGE_TYPE}/light-control-system.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
 	${MP_LD} -mcpu=PIC18F87K22 ${OBJECTFILES_QUOTED_IF_SPACED} \
-	-o dist/${CND_CONF}/${IMAGE_TYPE}/MicroprocessorsLab.${IMAGE_TYPE}.${OUTPUT_SUFFIX} \
+	-o dist/${CND_CONF}/${IMAGE_TYPE}/light-control-system.${IMAGE_TYPE}.${OUTPUT_SUFFIX} \
 	 -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -mcallgraph=std -mno-download-hex
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/MicroprocessorsLab.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
+dist/${CND_CONF}/${IMAGE_TYPE}/light-control-system.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
 	${MP_LD} -mcpu=PIC18F87K22 ${OBJECTFILES_QUOTED_IF_SPACED} \
-	-o dist/${CND_CONF}/${IMAGE_TYPE}/MicroprocessorsLab.${IMAGE_TYPE}.${OUTPUT_SUFFIX} \
+	-o dist/${CND_CONF}/${IMAGE_TYPE}/light-control-system.${IMAGE_TYPE}.${OUTPUT_SUFFIX} \
 	 -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -mcallgraph=std -mno-download-hex
 endif
 

@@ -3,7 +3,9 @@
 extrn	UART_Setup, UART_Transmit_Message  ; external uart subroutines
 extrn	LCD_Setup, LCD_Write_Message, LCD_Write_Hex, LCD_Clear, LCD_delay_ms ; external LCD subroutines
 extrn	ADC_Setup, ADC_Read		   ; external ADC subroutines
-	
+extrn	DAC_Setup, DAC_Int_Hi	
+    
+    
 psect	udata_acs   ; reserve data space in access ram
 counter:    ds 1    ; reserve one byte for a counter variable
 delay_count:ds 1    ; reserve one byte for counter in the delay routine
@@ -46,6 +48,10 @@ psect	code, abs
 rst: 	org 0x0
  	goto	setup
 
+	
+int_hi:	org	0x0008	; high vector, no low vector
+	goto	DAC_Int_Hi
+	
 	; ******* Programme FLASH read Setup Code ***********************
 setup:	bcf	CFGS	; point to Flash program memory  
 	bsf	EEPGD 	; access Flash program memory
@@ -93,6 +99,11 @@ measure_loop:
 	movf	ADRESL, W, A
 	call	LCD_Write_Hex
 ;	
+	
+	call	DAC_Setup
+	goto	$
+	
+	
 ;	; store reading in register
 ;;	banksel ARG1H
 ;;	movff	ADRESH, ARG1H, A
