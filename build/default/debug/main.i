@@ -10961,7 +10961,7 @@ ENDM
 extrn UART_Setup, UART_Transmit_Message ; external uart subroutines
 extrn LCD_Setup, LCD_Write_Message, LCD_Write_Hex, LCD_Clear, LCD_delay_ms ; external LCD subroutines
 extrn ADC_Setup, ADC_Read ; external ADC subroutines
-extrn DAC_Setup, DAC_Int_Hi
+extrn ADC_Interrupt_Service, Enable_Interrupt
 
 
 psect udata_acs ; reserve data space in access ram
@@ -11008,7 +11008,7 @@ rst: org 0x0
 
 
 int_hi: org 0x0008 ; high vector, no low vector
- goto DAC_Int_Hi
+ goto ADC_Interrupt_Service
 
  ; ******* Programme FLASH read Setup Code ***********************
 setup: bcf ((EECON1) and 0FFh), 6, a ; point to Flash program memory
@@ -11016,299 +11016,22 @@ setup: bcf ((EECON1) and 0FFh), 6, a ; point to Flash program memory
  call UART_Setup ; setup UART
  call LCD_Setup ; setup UART
  call ADC_Setup ; setup ADC
- goto measure_loop
+ goto targetInput
 
- ; ******* Main programme ****************************************
-;start: lfsr 0, myArray ; Load FSR0 with address in RAM
-; movlw low highword(myTable) ; address of data in PM
-; movwf TBLPTRU, A ; load upper bits to TBLPTRU
-; movlw high(myTable) ; address of data in PM
-; movwf TBLPTRH, A ; load high byte to TBLPTRH
-; movlw low(myTable) ; address of data in PM
-; movwf TBLPTRL, A ; load low byte to TBLPTRL
-; movlw myTable_l ; bytes to read
-; movwf counter, A ; our counter register
-;loop: tblrd*+ ; one byte from PM to TABLAT, increment TBLPRT
-; movff TABLAT, POSTINC0; move data from TABLAT to (FSR0), inc FSR0
-; decfsz counter, A ; count down to zero
-; bra loop ; keep going until finished
-;
-; movlw myTable_l ; output message to UART
-; lfsr 2, myArray
-; call UART_Transmit_Message
-;
-; movlw myTable_l-1 ; output message to LCD
-; ; don't send the final carriage return to LCD
-; lfsr 2, myArray
-; call LCD_Write_Message
+targetInput:
+
+ call Enable_Interrupt
+ goto feedbackloop
 
 
-measure_loop:
- call ADC_Read
-
-; call LCD_Clear
-;
-; movlw 0x2323
-; call LCD_Write_Hex
+feedbackloop:
 
 
- movf ADRESH, W, A
- call LCD_Write_Hex
- movf ADRESL, W, A
- call LCD_Write_Hex
+ bra feedbackloop
+
 ;
 
- call DAC_Setup
- goto $
-
-
-; ; store reading in register
-;; banksel ARG1H
-;; movff ADRESH, ARG1H, A
-;; movff ADRESL, ARG1L, A
-;
-;
-; ;multiplier
-;
-; banksel ARG2_0
-; movlw 0x21
-; movwf ARG2_0, A
-;
-; banksel ARG2_1
-; movlw 0x43
-; movwf ARG2_1, A
-;
-; banksel ARG2_2
-; movlw 0x65
-; movwf ARG2_2, A
-;
-; banksel ARG2_3
-; movlw 0x87
-; movwf ARG2_3, A
-;
-; ; denary 17
-; banksel ARG1
-; movlw 0x11
-; movwf ARG1, A
-;
-;
-; call eight_twentyfour_multiply
-;
-;; testing the number 4
-; banksel ARG1H
-; movlw 0x05
-; movwf ARG1H, A
-; movlw 0x04
-; movwf ARG1L, A
-;
-;;
-;;; store number we're multiplying by in register 
-; banksel ARG2H
-; movlw 0x02
-; movwf ARG2H, A
-; banksel ARG2L
-; movlw 0x03
-; movwf ARG2L, A
-;;;
-;
-; call write_res_LCD
-;
- movlw 10000
- call LCD_delay_ms
- movlw 10000
- call LCD_delay_ms
- movlw 10000
- call LCD_delay_ms
- movlw 10000
- call LCD_delay_ms
- movlw 10000
- call LCD_delay_ms
-;
-; goto measure_loop ; goto current line in code
-
-
- ; write to LCD (output MSB first)
-write_res_LCD:
- call LCD_Clear
- movf RES3, W, A
- call LCD_Write_Hex
- movf RES2, W, A
- call LCD_Write_Hex
- movf RES1, W, A
- call LCD_Write_Hex
- movf RES0, W, A
- call LCD_Write_Hex
-
-; movlw 12
-; movwf myNum, A
-; lfsr 2, myNum
-; movlw 2
-; call LCD_Write_Message
 
  return
 
-
- ; a delay subroutine if you need one, times around loop in delay_count
-delay: decfsz delay_count, A ; decrement until zero
- bra delay
- return
-
-
-test_new_multiplier:
- ; denary 67305985
- banksel ARG2_0
- movlw 0x01
- movwf ARG2_0, A
-
- banksel ARG2_1
- movlw 0x02
- movwf ARG2_1, A
-
- banksel ARG2_2
- movlw 0x03
- movwf ARG2_2, A
-
- banksel ARG2_3
- movlw 0x04
- movwf ARG2_3, A
-
- ; denary 18
- banksel ARG1
- movlw 0x12
- movwf ARG1, A
-
- call eight_twentyfour_multiply ; expect denary 1211507730, hex 48362412
-
- call write_res_LCD
-
- return
-
-
-sixteen_multiply:
- banksel ARG1L
- MOVF ARG1L, W, A
- MULWF ARG2L, A ; ARG1L * ARG2L->
- ; PRODH:PRODL
- MOVFF PRODH, RES1 ;
- MOVFF PRODL, RES0 ;
- ;
- MOVF ARG1H, W, A
- MULWF ARG2H, A ; ARG1H * ARG2H->
- ; PRODH:PRODL
- MOVFF PRODH, RES3 ;
- MOVFF PRODL, RES2 ;
- ;
- MOVF ARG1L, W, A
- MULWF ARG2H, A ; ARG1L * ARG2H->
- ; PRODH:PRODL
- MOVF PRODL, W, A ;
- banksel RES1
- ADDWF RES1, F, A ; Add cross
- MOVF PRODH, W, A ; products
- ADDWFC RES2, F, A ;
- CLRF WREG, A ;
- ADDWFC RES3, F, A ;
- ;
- MOVF ARG1H, W, A ;
- MULWF ARG2L, A ; ARG1H * ARG2L->
- ; PRODH:PRODL
- MOVF PRODL, W, A ;
- ADDWF RES1, F, A ; Add cross
- MOVF PRODH, W, A ; products
- ADDWFC RES2, F, A ;
- CLRF WREG, A ;
- ADDWFC RES3, F, A ;
- banksel 0
- return
-
-
-
-eight_twentyfour_multiply:
- ; arg1 stores 8 bit number
- ; arg2 stores 24 bit
-
- banksel ARG1L
- MOVF ARG1, W, A
- MULWF ARG2_0, A ; ARG1L * ARG2L->
- ; PRODH:PRODL
- MOVFF PRODH, RES1 ;
- MOVFF PRODL, RES0 ;
-
- MOVF ARG1, W, A
- MULWF ARG2_1, A ; ARG1L * ARG2H->
- ; PRODH:PRODL
- MOVF PRODL, W, A ;
- banksel RES1
- ADDWFC RES1, F, A ; Add cross
- MOVF PRODH, W, A ; products
- ADDWFC RES2, F, A ;
- CLRF WREG, A ;
- ADDWFC RES3, F, A ;
- ;
-
-
- banksel ARG1
- MOVF ARG1, W, A
- MULWF ARG2_2, A ; ARG1L * ARG2L->
- ; PRODH:PRODL
- MOVFF PRODH, RES1_2 ;
- MOVFF PRODL, RES0_2 ;
-
- MOVF ARG1, W, A
- MULWF ARG2_3, A ; ARG1L * ARG2H->
- ; PRODH:PRODL
- MOVF PRODL, W, A ;
- banksel RES1_2
- ADDWFC RES1_2, F, A ; Add cross
- MOVF PRODH, W, A ; products
- ADDWFC RES2_2, F, A ;
- CLRF WREG, A ;
- ;ADDWFC RES3_2, F, A ;
-
-
- call LCD_Clear
-
- movf RES3, W, A
- call LCD_Write_Hex
- movf RES2, W, A
- call LCD_Write_Hex
- movf RES1, W, A
- call LCD_Write_Hex
- movf RES0, W, A
- call LCD_Write_Hex
-
-
-; movf RES3_2, W, A
-; call LCD_Write_Hex
- movf RES2_2, W, A
- call LCD_Write_Hex
- movf RES1_2, W, A
- call LCD_Write_Hex
- movf RES0_2, W, A
- call LCD_Write_Hex
-
-
-
- ;movf RES2, W, A
-
-
- ;test
-; movf RES0_2, W, A
-; ADDWFC RES2, F, A
-; movwf RES2, A
-;
-;
-; movf RES1_2, W, A
-; ADDWFC RES3, F, A
-; movwf RES3, A
- ;;;;;;;;;;
-
-
-
- ; output is res0. res1, res2. res3
- ; overflow stored in res2_2
-# 360 "main.s"
- banksel 0
- return
-
- end rst
+end rst
