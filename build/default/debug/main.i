@@ -10990,6 +10990,7 @@ RES2_2: ds 1
 carry: ds 1
 myNum: ds 1
 decoded_value: ds 1
+digits_counter: ds 1
 
 
 psect udata_bank4 ; reserve data anywhere in RAM (here at 0x400)
@@ -11019,19 +11020,37 @@ setup: bcf ((EECON1) and 0FFh), 6, a ; point to Flash program memory
  call Keypad_Setup
  goto targetInput
 
+inputDigitsLoop:
+ call Keypad_Num_Decode
+
+ subwf 0xFF, 0, 0
+ bz inputDigitsLoop ; if null, loop again
+
+ ; if not zero, user made input
+
+ movwf decoded_value,A
+
+ ; if input D, finsihed entering, branch back
+ subwf 0xB7, 0, 0
+ bz combineInput
+
+ ; else a numerical digit has been entered
+ movlw 1
+ addwf inputDigitsLoop, 1, 0
+ ;movff decoded_value, ; TODO: second f is INCREMENTING IN RAM
+ movf decoded_value, 0, 0
+ call LCD_Write_Hex
+
+ bra inputDigitsLoop
+
 
 
 targetInput:
+ ;call inputDigitsLoop ; TODO: uncomment
+
+combineInput:
+
  ; ((RCON) and 0FFh), 3, a DO
-
-
-
-
-
- call Keypad_Num_Decode
- movwf decoded_value,A
- call LCD_Write_Hex
-
 
  call Enable_Interrupt
  goto feedbackloop

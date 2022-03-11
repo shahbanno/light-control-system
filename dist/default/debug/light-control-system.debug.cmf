@@ -14,25 +14,25 @@
 $build/default/debug/config.o
 config CONFIG 4 300000 300000 E 1
 $build/default/debug/ACD.o
-adc_code CODE 0 1FD8A 1FD8A 1E 1
+adc_code CODE 0 1FD92 1FD92 1E 1
 $build/default/debug/LCD.o
-udata_acs_ovr COMRAM 1 23 23 1 1
-udata_acs COMRAM 1 1D 1D 5 1
+udata_acs_ovr COMRAM 1 24 24 1 1
+udata_acs COMRAM 1 1E 1E 5 1
 lcd_code CODE 0 1FEE2 1FEE2 11E 1
 config CONFIG 4 300000 300000 E 1
 $build/default/debug/DAC_Interrupt.o
-dac_code CODE 0 1FDD0 1FDD0 28 1
+dac_code CODE 0 1FDD8 1FDD8 28 1
 $build/default/debug/UART.o
-uart_code CODE 0 1FDA8 1FDA8 28 1
-udata_acs COMRAM 1 22 22 1 1
+uart_code CODE 0 1FDB0 1FDB0 28 1
+udata_acs COMRAM 1 23 23 1 1
 $build/default/debug/main.o
-code CODE 0 0 0 38 1
-data CONST 0 1FD7C 1FD7C E 1
+code CODE 0 0 0 48 1
+data CONST 0 1FD84 1FD84 E 1
 udata_bank4 BANK4 1 400 400 80 1
-udata_acs COMRAM 1 0 0 15 1
+udata_acs COMRAM 1 0 0 16 1
 $build/default/debug/keypad.o
-udata_acs COMRAM 1 15 15 8 1
-keypad_code CODE 0 1FDF8 1FDF8 EA 1
+udata_acs COMRAM 1 16 16 8 1
+keypad_code CODE 0 1FE00 1FE00 E2 1
 # %UNUSED Section
 # This section enumerates the unused ranges of each CLASS. Each entry
 # is described on a single line as follows:
@@ -52,21 +52,21 @@ BANK6 600-6FF 1
 BANK7 700-7FF 1
 BANK8 800-8FF 1
 BANK9 900-9FF 1
-CONST 38-1FD7B 1
+CONST 48-1FD83 1
 IDLOC 200000-200007 1
-SMALLCONST 1000-1FD7B 1
-CODE 38-1FD7B 1
+SMALLCONST 1000-1FD83 1
+CODE 48-1FD83 1
 BANK10 A00-AFF 1
 BANK11 B00-BFF 1
 BANK12 C00-CFF 1
 BANK13 D00-DFF 1
 BANK14 E00-EFF 1
 BANK15 F00-F15 1
-BIGRAM 38-F15 1
-COMRAM 24-5F 1
+BIGRAM 48-F15 1
+COMRAM 25-5F 1
 EEDATA F00000-F003FF 1
 MEDIUMCONST 1000-FFFF 1
-MEDIUMCONST 11000-1FD7B 1
+MEDIUMCONST 11000-1FD83 1
 # %LINETAB Section
 # This section enumerates the file/line to address mappings.
 # The beginning of the section is indicated by %LINETAB.
@@ -81,21 +81,21 @@ MEDIUMCONST 11000-1FD7B 1
 # All other numeric values are in decimal.
 %LINETAB
 $build/default/debug/ACD.o
-1FD8A adc_code CODE >8:H:\lab2\bismillah\light-control-system\ACD.s
-1FD8C adc_code CODE >9:H:\lab2\bismillah\light-control-system\ACD.s
-1FD8E adc_code CODE >10:H:\lab2\bismillah\light-control-system\ACD.s
-1FD90 adc_code CODE >11:H:\lab2\bismillah\light-control-system\ACD.s
-1FD92 adc_code CODE >12:H:\lab2\bismillah\light-control-system\ACD.s
-1FD94 adc_code CODE >13:H:\lab2\bismillah\light-control-system\ACD.s
-1FD96 adc_code CODE >14:H:\lab2\bismillah\light-control-system\ACD.s
-1FD98 adc_code CODE >15:H:\lab2\bismillah\light-control-system\ACD.s
-1FD9A adc_code CODE >16:H:\lab2\bismillah\light-control-system\ACD.s
-1FD9C adc_code CODE >17:H:\lab2\bismillah\light-control-system\ACD.s
-1FD9E adc_code CODE >18:H:\lab2\bismillah\light-control-system\ACD.s
-1FDA0 adc_code CODE >21:H:\lab2\bismillah\light-control-system\ACD.s
-1FDA2 adc_code CODE >23:H:\lab2\bismillah\light-control-system\ACD.s
-1FDA4 adc_code CODE >24:H:\lab2\bismillah\light-control-system\ACD.s
-1FDA6 adc_code CODE >25:H:\lab2\bismillah\light-control-system\ACD.s
+1FD92 adc_code CODE >8:H:\lab2\bismillah\light-control-system\ACD.s
+1FD94 adc_code CODE >9:H:\lab2\bismillah\light-control-system\ACD.s
+1FD96 adc_code CODE >10:H:\lab2\bismillah\light-control-system\ACD.s
+1FD98 adc_code CODE >11:H:\lab2\bismillah\light-control-system\ACD.s
+1FD9A adc_code CODE >12:H:\lab2\bismillah\light-control-system\ACD.s
+1FD9C adc_code CODE >13:H:\lab2\bismillah\light-control-system\ACD.s
+1FD9E adc_code CODE >14:H:\lab2\bismillah\light-control-system\ACD.s
+1FDA0 adc_code CODE >15:H:\lab2\bismillah\light-control-system\ACD.s
+1FDA2 adc_code CODE >16:H:\lab2\bismillah\light-control-system\ACD.s
+1FDA4 adc_code CODE >17:H:\lab2\bismillah\light-control-system\ACD.s
+1FDA6 adc_code CODE >18:H:\lab2\bismillah\light-control-system\ACD.s
+1FDA8 adc_code CODE >21:H:\lab2\bismillah\light-control-system\ACD.s
+1FDAA adc_code CODE >23:H:\lab2\bismillah\light-control-system\ACD.s
+1FDAC adc_code CODE >24:H:\lab2\bismillah\light-control-system\ACD.s
+1FDAE adc_code CODE >25:H:\lab2\bismillah\light-control-system\ACD.s
 $build/default/debug/LCD.o
 1FEE2 lcd_code CODE >21:H:\lab2\bismillah\light-control-system\LCD.S
 1FEE4 lcd_code CODE >22:H:\lab2\bismillah\light-control-system\LCD.S
@@ -216,170 +216,174 @@ $build/default/debug/LCD.o
 1FFFA lcd_code CODE >158:H:\lab2\bismillah\light-control-system\LCD.S
 1FFFE lcd_code CODE >159:H:\lab2\bismillah\light-control-system\LCD.S
 $build/default/debug/DAC_Interrupt.o
-1FDD0 dac_code CODE >11:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDD2 dac_code CODE >12:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDD4 dac_code CODE >13:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDD6 dac_code CODE >15:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDDA dac_code CODE >16:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDDE dac_code CODE >17:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDE0 dac_code CODE >18:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDE4 dac_code CODE >19:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDE6 dac_code CODE >20:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDEA dac_code CODE >23:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDEC dac_code CODE >24:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDEE dac_code CODE >27:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDF0 dac_code CODE >28:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDF2 dac_code CODE >29:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDF4 dac_code CODE >30:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
-1FDF6 dac_code CODE >31:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDD8 dac_code CODE >11:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDDA dac_code CODE >12:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDDC dac_code CODE >13:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDDE dac_code CODE >15:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDE2 dac_code CODE >16:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDE6 dac_code CODE >17:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDE8 dac_code CODE >18:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDEC dac_code CODE >19:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDEE dac_code CODE >20:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDF2 dac_code CODE >23:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDF4 dac_code CODE >24:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDF6 dac_code CODE >27:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDF8 dac_code CODE >28:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDFA dac_code CODE >29:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDFC dac_code CODE >30:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
+1FDFE dac_code CODE >31:H:\lab2\bismillah\light-control-system\DAC_Interrupt.s
 $build/default/debug/UART.o
-1FDA8 uart_code CODE >10:H:\lab2\bismillah\light-control-system\UART.s
-1FDAA uart_code CODE >11:H:\lab2\bismillah\light-control-system\UART.s
-1FDAC uart_code CODE >12:H:\lab2\bismillah\light-control-system\UART.s
-1FDAE uart_code CODE >13:H:\lab2\bismillah\light-control-system\UART.s
-1FDB0 uart_code CODE >14:H:\lab2\bismillah\light-control-system\UART.s
-1FDB2 uart_code CODE >15:H:\lab2\bismillah\light-control-system\UART.s
-1FDB4 uart_code CODE >16:H:\lab2\bismillah\light-control-system\UART.s
-1FDB6 uart_code CODE >17:H:\lab2\bismillah\light-control-system\UART.s
-1FDB8 uart_code CODE >19:H:\lab2\bismillah\light-control-system\UART.s
-1FDBA uart_code CODE >22:H:\lab2\bismillah\light-control-system\UART.s
-1FDBC uart_code CODE >24:H:\lab2\bismillah\light-control-system\UART.s
-1FDBE uart_code CODE >25:H:\lab2\bismillah\light-control-system\UART.s
-1FDC2 uart_code CODE >26:H:\lab2\bismillah\light-control-system\UART.s
-1FDC4 uart_code CODE >27:H:\lab2\bismillah\light-control-system\UART.s
-1FDC6 uart_code CODE >28:H:\lab2\bismillah\light-control-system\UART.s
-1FDC8 uart_code CODE >31:H:\lab2\bismillah\light-control-system\UART.s
-1FDCA uart_code CODE >32:H:\lab2\bismillah\light-control-system\UART.s
-1FDCC uart_code CODE >33:H:\lab2\bismillah\light-control-system\UART.s
-1FDCE uart_code CODE >34:H:\lab2\bismillah\light-control-system\UART.s
+1FDB0 uart_code CODE >10:H:\lab2\bismillah\light-control-system\UART.s
+1FDB2 uart_code CODE >11:H:\lab2\bismillah\light-control-system\UART.s
+1FDB4 uart_code CODE >12:H:\lab2\bismillah\light-control-system\UART.s
+1FDB6 uart_code CODE >13:H:\lab2\bismillah\light-control-system\UART.s
+1FDB8 uart_code CODE >14:H:\lab2\bismillah\light-control-system\UART.s
+1FDBA uart_code CODE >15:H:\lab2\bismillah\light-control-system\UART.s
+1FDBC uart_code CODE >16:H:\lab2\bismillah\light-control-system\UART.s
+1FDBE uart_code CODE >17:H:\lab2\bismillah\light-control-system\UART.s
+1FDC0 uart_code CODE >19:H:\lab2\bismillah\light-control-system\UART.s
+1FDC2 uart_code CODE >22:H:\lab2\bismillah\light-control-system\UART.s
+1FDC4 uart_code CODE >24:H:\lab2\bismillah\light-control-system\UART.s
+1FDC6 uart_code CODE >25:H:\lab2\bismillah\light-control-system\UART.s
+1FDCA uart_code CODE >26:H:\lab2\bismillah\light-control-system\UART.s
+1FDCC uart_code CODE >27:H:\lab2\bismillah\light-control-system\UART.s
+1FDCE uart_code CODE >28:H:\lab2\bismillah\light-control-system\UART.s
+1FDD0 uart_code CODE >31:H:\lab2\bismillah\light-control-system\UART.s
+1FDD2 uart_code CODE >32:H:\lab2\bismillah\light-control-system\UART.s
+1FDD4 uart_code CODE >33:H:\lab2\bismillah\light-control-system\UART.s
+1FDD6 uart_code CODE >34:H:\lab2\bismillah\light-control-system\UART.s
 $build/default/debug/main.o
-0 code CODE >50:H:\lab2\bismillah\light-control-system\main.s
 0 code CODE >51:H:\lab2\bismillah\light-control-system\main.s
-4 code CODE >53:H:\lab2\bismillah\light-control-system\main.s
-8 code CODE >54:H:\lab2\bismillah\light-control-system\main.s
-C code CODE >57:H:\lab2\bismillah\light-control-system\main.s
-E code CODE >58:H:\lab2\bismillah\light-control-system\main.s
-10 code CODE >59:H:\lab2\bismillah\light-control-system\main.s
-14 code CODE >60:H:\lab2\bismillah\light-control-system\main.s
-18 code CODE >61:H:\lab2\bismillah\light-control-system\main.s
-1C code CODE >62:H:\lab2\bismillah\light-control-system\main.s
-20 code CODE >73:H:\lab2\bismillah\light-control-system\main.s
-24 code CODE >74:H:\lab2\bismillah\light-control-system\main.s
-26 code CODE >75:H:\lab2\bismillah\light-control-system\main.s
-2A code CODE >78:H:\lab2\bismillah\light-control-system\main.s
-2E code CODE >79:H:\lab2\bismillah\light-control-system\main.s
-32 code CODE >90:H:\lab2\bismillah\light-control-system\main.s
-34 code CODE >95:H:\lab2\bismillah\light-control-system\main.s
-36 code CODE >100:H:\lab2\bismillah\light-control-system\main.s
+0 code CODE >52:H:\lab2\bismillah\light-control-system\main.s
+4 code CODE >54:H:\lab2\bismillah\light-control-system\main.s
+8 code CODE >55:H:\lab2\bismillah\light-control-system\main.s
+C code CODE >58:H:\lab2\bismillah\light-control-system\main.s
+E code CODE >59:H:\lab2\bismillah\light-control-system\main.s
+10 code CODE >60:H:\lab2\bismillah\light-control-system\main.s
+14 code CODE >61:H:\lab2\bismillah\light-control-system\main.s
+18 code CODE >62:H:\lab2\bismillah\light-control-system\main.s
+1C code CODE >63:H:\lab2\bismillah\light-control-system\main.s
+20 code CODE >66:H:\lab2\bismillah\light-control-system\main.s
+24 code CODE >68:H:\lab2\bismillah\light-control-system\main.s
+26 code CODE >69:H:\lab2\bismillah\light-control-system\main.s
+28 code CODE >73:H:\lab2\bismillah\light-control-system\main.s
+2A code CODE >76:H:\lab2\bismillah\light-control-system\main.s
+2C code CODE >77:H:\lab2\bismillah\light-control-system\main.s
+2E code CODE >80:H:\lab2\bismillah\light-control-system\main.s
+30 code CODE >81:H:\lab2\bismillah\light-control-system\main.s
+32 code CODE >83:H:\lab2\bismillah\light-control-system\main.s
+34 code CODE >84:H:\lab2\bismillah\light-control-system\main.s
+38 code CODE >86:H:\lab2\bismillah\light-control-system\main.s
+3A code CODE >97:H:\lab2\bismillah\light-control-system\main.s
+3E code CODE >98:H:\lab2\bismillah\light-control-system\main.s
+42 code CODE >109:H:\lab2\bismillah\light-control-system\main.s
+44 code CODE >114:H:\lab2\bismillah\light-control-system\main.s
+46 code CODE >119:H:\lab2\bismillah\light-control-system\main.s
 $build/default/debug/keypad.o
-1FDF8 keypad_code CODE >24:H:\lab2\bismillah\light-control-system\keypad.s
-1FDFA keypad_code CODE >25:H:\lab2\bismillah\light-control-system\keypad.s
-1FDFC keypad_code CODE >26:H:\lab2\bismillah\light-control-system\keypad.s
-1FDFE keypad_code CODE >27:H:\lab2\bismillah\light-control-system\keypad.s
-1FE00 keypad_code CODE >30:H:\lab2\bismillah\light-control-system\keypad.s
-1FE02 keypad_code CODE >34:H:\lab2\bismillah\light-control-system\keypad.s
-1FE04 keypad_code CODE >35:H:\lab2\bismillah\light-control-system\keypad.s
-1FE06 keypad_code CODE >36:H:\lab2\bismillah\light-control-system\keypad.s
-1FE08 keypad_code CODE >37:H:\lab2\bismillah\light-control-system\keypad.s
-1FE0C keypad_code CODE >42:H:\lab2\bismillah\light-control-system\keypad.s
-1FE10 keypad_code CODE >44:H:\lab2\bismillah\light-control-system\keypad.s
-1FE12 keypad_code CODE >45:H:\lab2\bismillah\light-control-system\keypad.s
-1FE14 keypad_code CODE >46:H:\lab2\bismillah\light-control-system\keypad.s
-1FE16 keypad_code CODE >47:H:\lab2\bismillah\light-control-system\keypad.s
-1FE1A keypad_code CODE >48:H:\lab2\bismillah\light-control-system\keypad.s
-1FE1E keypad_code CODE >50:H:\lab2\bismillah\light-control-system\keypad.s
-1FE20 keypad_code CODE >51:H:\lab2\bismillah\light-control-system\keypad.s
-1FE22 keypad_code CODE >52:H:\lab2\bismillah\light-control-system\keypad.s
-1FE24 keypad_code CODE >53:H:\lab2\bismillah\light-control-system\keypad.s
-1FE28 keypad_code CODE >55:H:\lab2\bismillah\light-control-system\keypad.s
-1FE2A keypad_code CODE >59:H:\lab2\bismillah\light-control-system\keypad.s
-1FE2E keypad_code CODE >62:H:\lab2\bismillah\light-control-system\keypad.s
-1FE30 keypad_code CODE >63:H:\lab2\bismillah\light-control-system\keypad.s
-1FE32 keypad_code CODE >64:H:\lab2\bismillah\light-control-system\keypad.s
-1FE34 keypad_code CODE >66:H:\lab2\bismillah\light-control-system\keypad.s
-1FE36 keypad_code CODE >70:H:\lab2\bismillah\light-control-system\keypad.s
-1FE3A keypad_code CODE >73:H:\lab2\bismillah\light-control-system\keypad.s
-1FE3C keypad_code CODE >74:H:\lab2\bismillah\light-control-system\keypad.s
-1FE3E keypad_code CODE >75:H:\lab2\bismillah\light-control-system\keypad.s
-1FE40 keypad_code CODE >79:H:\lab2\bismillah\light-control-system\keypad.s
-1FE42 keypad_code CODE >80:H:\lab2\bismillah\light-control-system\keypad.s
-1FE44 keypad_code CODE >81:H:\lab2\bismillah\light-control-system\keypad.s
-1FE46 keypad_code CODE >84:H:\lab2\bismillah\light-control-system\keypad.s
-1FE48 keypad_code CODE >85:H:\lab2\bismillah\light-control-system\keypad.s
-1FE4A keypad_code CODE >86:H:\lab2\bismillah\light-control-system\keypad.s
-1FE4C keypad_code CODE >89:H:\lab2\bismillah\light-control-system\keypad.s
-1FE4E keypad_code CODE >90:H:\lab2\bismillah\light-control-system\keypad.s
-1FE50 keypad_code CODE >91:H:\lab2\bismillah\light-control-system\keypad.s
-1FE52 keypad_code CODE >100:H:\lab2\bismillah\light-control-system\keypad.s
-1FE54 keypad_code CODE >101:H:\lab2\bismillah\light-control-system\keypad.s
-1FE56 keypad_code CODE >102:H:\lab2\bismillah\light-control-system\keypad.s
-1FE58 keypad_code CODE >105:H:\lab2\bismillah\light-control-system\keypad.s
-1FE5A keypad_code CODE >106:H:\lab2\bismillah\light-control-system\keypad.s
-1FE5C keypad_code CODE >107:H:\lab2\bismillah\light-control-system\keypad.s
-1FE5E keypad_code CODE >110:H:\lab2\bismillah\light-control-system\keypad.s
-1FE60 keypad_code CODE >111:H:\lab2\bismillah\light-control-system\keypad.s
-1FE62 keypad_code CODE >112:H:\lab2\bismillah\light-control-system\keypad.s
-1FE64 keypad_code CODE >115:H:\lab2\bismillah\light-control-system\keypad.s
-1FE66 keypad_code CODE >116:H:\lab2\bismillah\light-control-system\keypad.s
-1FE68 keypad_code CODE >117:H:\lab2\bismillah\light-control-system\keypad.s
-1FE6A keypad_code CODE >120:H:\lab2\bismillah\light-control-system\keypad.s
-1FE6C keypad_code CODE >121:H:\lab2\bismillah\light-control-system\keypad.s
-1FE6E keypad_code CODE >122:H:\lab2\bismillah\light-control-system\keypad.s
-1FE70 keypad_code CODE >125:H:\lab2\bismillah\light-control-system\keypad.s
-1FE72 keypad_code CODE >126:H:\lab2\bismillah\light-control-system\keypad.s
-1FE74 keypad_code CODE >127:H:\lab2\bismillah\light-control-system\keypad.s
-1FE76 keypad_code CODE >130:H:\lab2\bismillah\light-control-system\keypad.s
-1FE78 keypad_code CODE >131:H:\lab2\bismillah\light-control-system\keypad.s
-1FE7A keypad_code CODE >132:H:\lab2\bismillah\light-control-system\keypad.s
-1FE7C keypad_code CODE >135:H:\lab2\bismillah\light-control-system\keypad.s
-1FE7E keypad_code CODE >136:H:\lab2\bismillah\light-control-system\keypad.s
-1FE80 keypad_code CODE >137:H:\lab2\bismillah\light-control-system\keypad.s
-1FE82 keypad_code CODE >140:H:\lab2\bismillah\light-control-system\keypad.s
-1FE84 keypad_code CODE >144:H:\lab2\bismillah\light-control-system\keypad.s
-1FE86 keypad_code CODE >145:H:\lab2\bismillah\light-control-system\keypad.s
-1FE88 keypad_code CODE >148:H:\lab2\bismillah\light-control-system\keypad.s
-1FE8A keypad_code CODE >149:H:\lab2\bismillah\light-control-system\keypad.s
-1FE8C keypad_code CODE >152:H:\lab2\bismillah\light-control-system\keypad.s
-1FE8E keypad_code CODE >153:H:\lab2\bismillah\light-control-system\keypad.s
-1FE90 keypad_code CODE >156:H:\lab2\bismillah\light-control-system\keypad.s
-1FE92 keypad_code CODE >157:H:\lab2\bismillah\light-control-system\keypad.s
-1FE94 keypad_code CODE >160:H:\lab2\bismillah\light-control-system\keypad.s
-1FE96 keypad_code CODE >161:H:\lab2\bismillah\light-control-system\keypad.s
-1FE98 keypad_code CODE >164:H:\lab2\bismillah\light-control-system\keypad.s
-1FE9A keypad_code CODE >165:H:\lab2\bismillah\light-control-system\keypad.s
-1FE9C keypad_code CODE >168:H:\lab2\bismillah\light-control-system\keypad.s
-1FE9E keypad_code CODE >169:H:\lab2\bismillah\light-control-system\keypad.s
-1FEA0 keypad_code CODE >172:H:\lab2\bismillah\light-control-system\keypad.s
-1FEA2 keypad_code CODE >173:H:\lab2\bismillah\light-control-system\keypad.s
-1FEA4 keypad_code CODE >176:H:\lab2\bismillah\light-control-system\keypad.s
-1FEA6 keypad_code CODE >177:H:\lab2\bismillah\light-control-system\keypad.s
-1FEA8 keypad_code CODE >180:H:\lab2\bismillah\light-control-system\keypad.s
-1FEAA keypad_code CODE >181:H:\lab2\bismillah\light-control-system\keypad.s
-1FEAC keypad_code CODE >184:H:\lab2\bismillah\light-control-system\keypad.s
-1FEAE keypad_code CODE >185:H:\lab2\bismillah\light-control-system\keypad.s
-1FEB0 keypad_code CODE >188:H:\lab2\bismillah\light-control-system\keypad.s
-1FEB2 keypad_code CODE >189:H:\lab2\bismillah\light-control-system\keypad.s
-1FEB4 keypad_code CODE >192:H:\lab2\bismillah\light-control-system\keypad.s
-1FEB6 keypad_code CODE >197:H:\lab2\bismillah\light-control-system\keypad.s
-1FEB8 keypad_code CODE >199:H:\lab2\bismillah\light-control-system\keypad.s
-1FEBA keypad_code CODE >200:H:\lab2\bismillah\light-control-system\keypad.s
-1FEBE keypad_code CODE >201:H:\lab2\bismillah\light-control-system\keypad.s
-1FEC0 keypad_code CODE >202:H:\lab2\bismillah\light-control-system\keypad.s
-1FEC2 keypad_code CODE >203:H:\lab2\bismillah\light-control-system\keypad.s
-1FEC4 keypad_code CODE >206:H:\lab2\bismillah\light-control-system\keypad.s
-1FEC6 keypad_code CODE >207:H:\lab2\bismillah\light-control-system\keypad.s
-1FEC8 keypad_code CODE >208:H:\lab2\bismillah\light-control-system\keypad.s
-1FECA keypad_code CODE >209:H:\lab2\bismillah\light-control-system\keypad.s
-1FECC keypad_code CODE >210:H:\lab2\bismillah\light-control-system\keypad.s
-1FECE keypad_code CODE >211:H:\lab2\bismillah\light-control-system\keypad.s
-1FED0 keypad_code CODE >212:H:\lab2\bismillah\light-control-system\keypad.s
-1FED2 keypad_code CODE >213:H:\lab2\bismillah\light-control-system\keypad.s
-1FED6 keypad_code CODE >214:H:\lab2\bismillah\light-control-system\keypad.s
-1FED8 keypad_code CODE >217:H:\lab2\bismillah\light-control-system\keypad.s
-1FEDA keypad_code CODE >219:H:\lab2\bismillah\light-control-system\keypad.s
-1FEDC keypad_code CODE >220:H:\lab2\bismillah\light-control-system\keypad.s
-1FEDE keypad_code CODE >221:H:\lab2\bismillah\light-control-system\keypad.s
-1FEE0 keypad_code CODE >222:H:\lab2\bismillah\light-control-system\keypad.s
+1FE00 keypad_code CODE >24:H:\lab2\bismillah\light-control-system\keypad.s
+1FE02 keypad_code CODE >25:H:\lab2\bismillah\light-control-system\keypad.s
+1FE04 keypad_code CODE >26:H:\lab2\bismillah\light-control-system\keypad.s
+1FE06 keypad_code CODE >27:H:\lab2\bismillah\light-control-system\keypad.s
+1FE08 keypad_code CODE >30:H:\lab2\bismillah\light-control-system\keypad.s
+1FE0A keypad_code CODE >34:H:\lab2\bismillah\light-control-system\keypad.s
+1FE0C keypad_code CODE >35:H:\lab2\bismillah\light-control-system\keypad.s
+1FE0E keypad_code CODE >36:H:\lab2\bismillah\light-control-system\keypad.s
+1FE10 keypad_code CODE >37:H:\lab2\bismillah\light-control-system\keypad.s
+1FE14 keypad_code CODE >42:H:\lab2\bismillah\light-control-system\keypad.s
+1FE18 keypad_code CODE >44:H:\lab2\bismillah\light-control-system\keypad.s
+1FE1A keypad_code CODE >45:H:\lab2\bismillah\light-control-system\keypad.s
+1FE1C keypad_code CODE >46:H:\lab2\bismillah\light-control-system\keypad.s
+1FE1E keypad_code CODE >47:H:\lab2\bismillah\light-control-system\keypad.s
+1FE22 keypad_code CODE >48:H:\lab2\bismillah\light-control-system\keypad.s
+1FE26 keypad_code CODE >50:H:\lab2\bismillah\light-control-system\keypad.s
+1FE28 keypad_code CODE >51:H:\lab2\bismillah\light-control-system\keypad.s
+1FE2A keypad_code CODE >52:H:\lab2\bismillah\light-control-system\keypad.s
+1FE2C keypad_code CODE >53:H:\lab2\bismillah\light-control-system\keypad.s
+1FE30 keypad_code CODE >55:H:\lab2\bismillah\light-control-system\keypad.s
+1FE32 keypad_code CODE >59:H:\lab2\bismillah\light-control-system\keypad.s
+1FE36 keypad_code CODE >62:H:\lab2\bismillah\light-control-system\keypad.s
+1FE38 keypad_code CODE >63:H:\lab2\bismillah\light-control-system\keypad.s
+1FE3A keypad_code CODE >64:H:\lab2\bismillah\light-control-system\keypad.s
+1FE3C keypad_code CODE >66:H:\lab2\bismillah\light-control-system\keypad.s
+1FE3E keypad_code CODE >70:H:\lab2\bismillah\light-control-system\keypad.s
+1FE42 keypad_code CODE >76:H:\lab2\bismillah\light-control-system\keypad.s
+1FE44 keypad_code CODE >77:H:\lab2\bismillah\light-control-system\keypad.s
+1FE46 keypad_code CODE >78:H:\lab2\bismillah\light-control-system\keypad.s
+1FE48 keypad_code CODE >81:H:\lab2\bismillah\light-control-system\keypad.s
+1FE4A keypad_code CODE >82:H:\lab2\bismillah\light-control-system\keypad.s
+1FE4C keypad_code CODE >83:H:\lab2\bismillah\light-control-system\keypad.s
+1FE4E keypad_code CODE >86:H:\lab2\bismillah\light-control-system\keypad.s
+1FE50 keypad_code CODE >87:H:\lab2\bismillah\light-control-system\keypad.s
+1FE52 keypad_code CODE >88:H:\lab2\bismillah\light-control-system\keypad.s
+1FE54 keypad_code CODE >97:H:\lab2\bismillah\light-control-system\keypad.s
+1FE56 keypad_code CODE >98:H:\lab2\bismillah\light-control-system\keypad.s
+1FE58 keypad_code CODE >99:H:\lab2\bismillah\light-control-system\keypad.s
+1FE5A keypad_code CODE >102:H:\lab2\bismillah\light-control-system\keypad.s
+1FE5C keypad_code CODE >103:H:\lab2\bismillah\light-control-system\keypad.s
+1FE5E keypad_code CODE >104:H:\lab2\bismillah\light-control-system\keypad.s
+1FE60 keypad_code CODE >107:H:\lab2\bismillah\light-control-system\keypad.s
+1FE62 keypad_code CODE >108:H:\lab2\bismillah\light-control-system\keypad.s
+1FE64 keypad_code CODE >109:H:\lab2\bismillah\light-control-system\keypad.s
+1FE66 keypad_code CODE >112:H:\lab2\bismillah\light-control-system\keypad.s
+1FE68 keypad_code CODE >113:H:\lab2\bismillah\light-control-system\keypad.s
+1FE6A keypad_code CODE >114:H:\lab2\bismillah\light-control-system\keypad.s
+1FE6C keypad_code CODE >117:H:\lab2\bismillah\light-control-system\keypad.s
+1FE6E keypad_code CODE >118:H:\lab2\bismillah\light-control-system\keypad.s
+1FE70 keypad_code CODE >119:H:\lab2\bismillah\light-control-system\keypad.s
+1FE72 keypad_code CODE >122:H:\lab2\bismillah\light-control-system\keypad.s
+1FE74 keypad_code CODE >123:H:\lab2\bismillah\light-control-system\keypad.s
+1FE76 keypad_code CODE >124:H:\lab2\bismillah\light-control-system\keypad.s
+1FE78 keypad_code CODE >127:H:\lab2\bismillah\light-control-system\keypad.s
+1FE7A keypad_code CODE >128:H:\lab2\bismillah\light-control-system\keypad.s
+1FE7C keypad_code CODE >129:H:\lab2\bismillah\light-control-system\keypad.s
+1FE7E keypad_code CODE >132:H:\lab2\bismillah\light-control-system\keypad.s
+1FE80 keypad_code CODE >133:H:\lab2\bismillah\light-control-system\keypad.s
+1FE82 keypad_code CODE >134:H:\lab2\bismillah\light-control-system\keypad.s
+1FE84 keypad_code CODE >137:H:\lab2\bismillah\light-control-system\keypad.s
+1FE86 keypad_code CODE >141:H:\lab2\bismillah\light-control-system\keypad.s
+1FE88 keypad_code CODE >142:H:\lab2\bismillah\light-control-system\keypad.s
+1FE8A keypad_code CODE >145:H:\lab2\bismillah\light-control-system\keypad.s
+1FE8C keypad_code CODE >146:H:\lab2\bismillah\light-control-system\keypad.s
+1FE8E keypad_code CODE >149:H:\lab2\bismillah\light-control-system\keypad.s
+1FE90 keypad_code CODE >150:H:\lab2\bismillah\light-control-system\keypad.s
+1FE92 keypad_code CODE >153:H:\lab2\bismillah\light-control-system\keypad.s
+1FE94 keypad_code CODE >154:H:\lab2\bismillah\light-control-system\keypad.s
+1FE96 keypad_code CODE >157:H:\lab2\bismillah\light-control-system\keypad.s
+1FE98 keypad_code CODE >158:H:\lab2\bismillah\light-control-system\keypad.s
+1FE9A keypad_code CODE >161:H:\lab2\bismillah\light-control-system\keypad.s
+1FE9C keypad_code CODE >162:H:\lab2\bismillah\light-control-system\keypad.s
+1FE9E keypad_code CODE >165:H:\lab2\bismillah\light-control-system\keypad.s
+1FEA0 keypad_code CODE >166:H:\lab2\bismillah\light-control-system\keypad.s
+1FEA2 keypad_code CODE >169:H:\lab2\bismillah\light-control-system\keypad.s
+1FEA4 keypad_code CODE >170:H:\lab2\bismillah\light-control-system\keypad.s
+1FEA6 keypad_code CODE >173:H:\lab2\bismillah\light-control-system\keypad.s
+1FEA8 keypad_code CODE >174:H:\lab2\bismillah\light-control-system\keypad.s
+1FEAA keypad_code CODE >177:H:\lab2\bismillah\light-control-system\keypad.s
+1FEAC keypad_code CODE >178:H:\lab2\bismillah\light-control-system\keypad.s
+1FEAE keypad_code CODE >181:H:\lab2\bismillah\light-control-system\keypad.s
+1FEB0 keypad_code CODE >182:H:\lab2\bismillah\light-control-system\keypad.s
+1FEB2 keypad_code CODE >185:H:\lab2\bismillah\light-control-system\keypad.s
+1FEB4 keypad_code CODE >186:H:\lab2\bismillah\light-control-system\keypad.s
+1FEB6 keypad_code CODE >192:H:\lab2\bismillah\light-control-system\keypad.s
+1FEB8 keypad_code CODE >194:H:\lab2\bismillah\light-control-system\keypad.s
+1FEBA keypad_code CODE >195:H:\lab2\bismillah\light-control-system\keypad.s
+1FEBE keypad_code CODE >196:H:\lab2\bismillah\light-control-system\keypad.s
+1FEC0 keypad_code CODE >197:H:\lab2\bismillah\light-control-system\keypad.s
+1FEC2 keypad_code CODE >198:H:\lab2\bismillah\light-control-system\keypad.s
+1FEC4 keypad_code CODE >201:H:\lab2\bismillah\light-control-system\keypad.s
+1FEC6 keypad_code CODE >202:H:\lab2\bismillah\light-control-system\keypad.s
+1FEC8 keypad_code CODE >203:H:\lab2\bismillah\light-control-system\keypad.s
+1FECA keypad_code CODE >204:H:\lab2\bismillah\light-control-system\keypad.s
+1FECC keypad_code CODE >205:H:\lab2\bismillah\light-control-system\keypad.s
+1FECE keypad_code CODE >206:H:\lab2\bismillah\light-control-system\keypad.s
+1FED0 keypad_code CODE >207:H:\lab2\bismillah\light-control-system\keypad.s
+1FED2 keypad_code CODE >208:H:\lab2\bismillah\light-control-system\keypad.s
+1FED6 keypad_code CODE >209:H:\lab2\bismillah\light-control-system\keypad.s
+1FED8 keypad_code CODE >212:H:\lab2\bismillah\light-control-system\keypad.s
+1FEDA keypad_code CODE >214:H:\lab2\bismillah\light-control-system\keypad.s
+1FEDC keypad_code CODE >215:H:\lab2\bismillah\light-control-system\keypad.s
+1FEDE keypad_code CODE >216:H:\lab2\bismillah\light-control-system\keypad.s
+1FEE0 keypad_code CODE >217:H:\lab2\bismillah\light-control-system\keypad.s
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -410,22 +414,22 @@ __Hudata_bank9 0 0 ABS 0 udata_bank9 -
 __Hlcd_code 0 0 ABS 0 lcd_code -
 __Hdac_code 0 0 ABS 0 dac_code -
 __Hkeypad_code 0 0 ABS 0 keypad_code -
-__Ludata_acs_ovr 23 0 COMRAM 1 udata_acs_ovr -
+__Ludata_acs_ovr 24 0 COMRAM 1 udata_acs_ovr -
 LCD_Write_Hex 1FF38 0 CODE 0 lcd_code build/default/debug/LCD.o
 __Hadc_code 0 0 ABS 0 adc_code -
-__Hudata_acs_ovr 24 0 COMRAM 1 udata_acs_ovr -
+__Hudata_acs_ovr 25 0 COMRAM 1 udata_acs_ovr -
 __Huart_code 0 0 ABS 0 uart_code -
-Keypad_A_Decode 1FE2A 0 CODE 0 keypad_code build/default/debug/keypad.o
+Keypad_A_Decode 1FE32 0 CODE 0 keypad_code build/default/debug/keypad.o
 __Hudata_bank10 0 0 ABS 0 udata_bank10 -
 __Hudata_bank11 0 0 ABS 0 udata_bank11 -
 __Hudata_bank12 0 0 ABS 0 udata_bank12 -
 __Hudata_bank13 0 0 ABS 0 udata_bank13 -
 __Hudata_bank14 0 0 ABS 0 udata_bank14 -
 __Hudata_bank15 0 0 ABS 0 udata_bank15 -
-ADC_Setup 1FD8A 0 CODE 0 adc_code build/default/debug/ACD.o
+ADC_Setup 1FD92 0 CODE 0 adc_code build/default/debug/ACD.o
 __Luart_code 0 0 ABS 0 uart_code -
-Enable_Interrupt 1FDEE 0 CODE 0 dac_code build/default/debug/DAC_Interrupt.o
-Keypad_Num_Decode 1FE36 0 CODE 0 keypad_code build/default/debug/keypad.o
+Enable_Interrupt 1FDF6 0 CODE 0 dac_code build/default/debug/DAC_Interrupt.o
+Keypad_Num_Decode 1FE3E 0 CODE 0 keypad_code build/default/debug/keypad.o
 isa$xinst 0 0 ABS 0 - build/default/debug/LCD.o
 __Hedata 0 0 ABS 0 edata -
 __Hudata 0 0 ABS 0 udata -
@@ -445,11 +449,11 @@ __Ludata_bank12 0 0 ABS 0 udata_bank12 -
 __Ludata_bank13 0 0 ABS 0 udata_bank13 -
 __Ludata_bank14 0 0 ABS 0 udata_bank14 -
 __Ludata_bank15 0 0 ABS 0 udata_bank15 -
-ADC_Interrupt_Service 1FDD0 0 CODE 0 dac_code build/default/debug/DAC_Interrupt.o
-ADC_Read 1FDA0 0 CODE 0 adc_code build/default/debug/ACD.o
+ADC_Interrupt_Service 1FDD8 0 CODE 0 dac_code build/default/debug/DAC_Interrupt.o
+ADC_Read 1FDA8 0 CODE 0 adc_code build/default/debug/ACD.o
 __Lconfig 0 0 CONFIG 4 config -
-UART_Transmit_Message 1FDBA 0 CODE 0 uart_code build/default/debug/UART.o
-Keypad_Setup 1FDF8 0 CODE 0 keypad_code build/default/debug/keypad.o
+UART_Transmit_Message 1FDC2 0 CODE 0 uart_code build/default/debug/UART.o
+Keypad_Setup 1FE00 0 CODE 0 keypad_code build/default/debug/keypad.o
 LCD_Write_Message 1FF56 0 CODE 0 lcd_code build/default/debug/LCD.o
 isa$std 1 0 ABS 0 - build/default/debug/LCD.o
 LCD_Clear 1FFF2 0 CODE 0 lcd_code build/default/debug/LCD.o
@@ -473,7 +477,7 @@ __Llcd_code 0 0 ABS 0 lcd_code -
 __Ldac_code 0 0 ABS 0 dac_code -
 __Lkeypad_code 0 0 ABS 0 keypad_code -
 __Hudata_acs 0 0 ABS 0 udata_acs -
-UART_Setup 1FDA8 0 CODE 0 uart_code build/default/debug/UART.o
+UART_Setup 1FDB0 0 CODE 0 uart_code build/default/debug/UART.o
 __Ludata_acs 0 0 ABS 0 udata_acs -
 # %SPLITSTAB Section
 # This section enumerates all the psect splits performed by the assembler.
@@ -499,14 +503,14 @@ __Ludata_acs 0 0 ABS 0 udata_acs -
 # and size are in units of delta. The file address is in units of bytes.
 # All other numeric quantities are in decimal.
 %SEGMENTS
-adc_code 0 1FD8A 1FD8A 1E 1
-uart_code 0 1FDA8 1FDA8 28 1
-data 0 1FD7C 1FD7C E 1
+adc_code 0 1FD92 1FD92 1E 1
+uart_code 0 1FDB0 1FDB0 28 1
+data 0 1FD84 1FD84 E 1
 udata_bank4 1 400 400 80 1
-udata_acs 1 0 0 24 1
-keypad_code 0 1FDF8 1FDF8 EA 1
+udata_acs 1 0 0 25 1
+keypad_code 0 1FE00 1FE00 E2 1
 lcd_code 0 1FEE2 1FEE2 11E 1
-dac_code 0 1FDD0 1FDD0 28 1
+dac_code 0 1FDD8 1FDD8 28 1
 # %NOTES Section
 # This section contains data of all the note-psects.  The beginning of the section
 # is indicated by %NOTES. The first line indicates the name and decimal

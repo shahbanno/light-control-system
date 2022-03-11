@@ -11027,11 +11027,8 @@ Keypad_A_Decode:
 Keypad_Num_Decode:
     call Decode_Rows_Cols
 
-    ; ; what number is it?
-    movlw 0xFF
-    subwf All_bits, 0,0
-    bz outputNull
-    ;
+    ; what number is it?
+
     ;
     ; CHECK IF 1
     movlw 0xEE
@@ -11095,11 +11092,11 @@ Keypad_Num_Decode:
     bz output0
 
     ; None of these options so NULL
-    bz outputIncorrect
+    bz outputNull
 
 
 outputNull:
-    movlw 0x00
+    movlw 0xFF
     return
 
 output1:
@@ -11146,8 +11143,6 @@ outputD:
     movlw 0xD
     return
 
-outputIncorrect:
-    return
 
 
 ; ** a few delay routines below here as LCD timing can be quite critical ****
