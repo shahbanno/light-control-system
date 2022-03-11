@@ -1,6 +1,6 @@
-# 1 "main.s"
+# 1 "keypad.s"
 # 1 "<built-in>" 1
-# 1 "main.s" 2
+# 1 "keypad.s" 2
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.32\\pic\\include\\xc.inc" 1 3
 
 
@@ -10956,105 +10956,229 @@ stk_offset SET 0
 auto_size SET 0
 ENDM
 # 5 "C:\\Program Files\\Microchip\\xc8\\v2.32\\pic\\include\\xc.inc" 2 3
-# 2 "main.s" 2
-
-extrn UART_Setup, UART_Transmit_Message ; external uart subroutines
-extrn LCD_Setup, LCD_Write_Message, LCD_Write_Hex, LCD_Clear, LCD_delay_ms ; external LCD subroutines
-extrn ADC_Setup, ADC_Read ; external ADC subroutines
-extrn ADC_Interrupt_Service, Enable_Interrupt
-extrn Keypad_Setup, Keypad_Num_Decode, Keypad_A_Decode
+# 2 "keypad.s" 2
 
 
-psect udata_acs ; reserve data space in access ram
-counter: ds 1 ; reserve one byte for a counter variable
-delay_count:ds 1 ; reserve one byte for counter in the delay routine
-ARG1L: ds 1
-ARG1H: ds 1
-ARG2L: ds 1
-ARG2H: ds 1
-ARG1: ds 1
-ARG2_0: ds 1
-ARG2_1: ds 1
-ARG2_2: ds 1
-ARG2_3: ds 1
-
-RES0: ds 1
-RES1: ds 1
-RES2: ds 1
-RES3: ds 1
-
-RES0_2: ds 1
-RES1_2: ds 1
-RES2_2: ds 1
-
-carry: ds 1
-myNum: ds 1
-decoded_value: ds 1
+global Keypad_Setup, Keypad_A_Decode, Keypad_Num_Decode
 
 
-psect udata_bank4 ; reserve data anywhere in RAM (here at 0x400)
-myArray: ds 0x80 ; reserve 128 bytes for message data
+psect udata_acs ; named variables in access ram
+LCD_cnt_l: ds 1 ; reserve 1 byte for variable LCD_cnt_l
+LCD_cnt_h: ds 1 ; reserve 1 byte for variable LCD_cnt_h
+LCD_cnt_ms: ds 1 ; reserve 1 byte for ms counter
+LCD_tmp: ds 1 ; reserve 1 byte for temporary use
+LCD_counter: ds 1 ; reserve 1 byte for counting through nessage
+Row_bits: ds 1 ; store row bits (lower nibble needed)
+Col_bits: ds 1 ; '' column '' (upper nibble ,,)
+All_bits: ds 1
+LCD_E EQU 5 ; LCD enable bit
+LCD_RS EQU 4 ; LCD register select bit
 
 
-psect data
- ; ******* myTable, data in programme memory, and its length *****
-myTable:
- db 'H','e','l','l','o',' ','W','o','r','l','d','!',0x0a
-     ; message, plus carriage return
- myTable_l EQU 13 ; length of data
- align 2
-
-psect code, abs
-rst: org 0x0
-  goto setup
-
-int_hi: org 0x0008 ; high vector, no low vector
- goto ADC_Interrupt_Service
-
- ; ******* Programme FLASH read Setup Code ***********************
-setup: bcf ((EECON1) and 0FFh), 6, a ; point to Flash program memory
- bsf ((EECON1) and 0FFh), 7, a ; access Flash program memory
- call LCD_Setup
- call ADC_Setup ; setup ADC
- call Keypad_Setup
- goto targetInput
+psect keypad_code,class=CODE
 
 
+Keypad_Setup: ; keypad connected to port E
+    banksel PADCFG1
+    bsf ((PADCFG1) and 0FFh), 6, b
+    banksel 0
+    clrf LATE, A
+    ; movlw 0x00
+    ; movf TRISH, A
+    return
 
-targetInput:
- ; ((RCON) and 0FFh), 3, a DO
+Decode_Rows_Cols:
+    ; decode rows
+    movlw 0x0F
+    movwf TRISE, A
+    movlw 2
+    call LCD_delay_ms
+
+    ; movlw 0x0A
+    ; movwf PORTE, A
+
+    movff PORTE, Row_bits, A
+    ; decode columns
+    movlw 0xF0
+    movwf TRISE, A
+    movlw 2
+    call LCD_delay_ms
+    movff PORTE, Col_bits, A
+
+    movf Row_bits, W, A
+    iorwf Col_bits, 0,0
+    movwf PORTH, A
+    movff LATH, All_bits, A
+
+    return
+
+
+Keypad_A_Decode:
+    call Decode_Rows_Cols
+
+    ; CHECK IF A
+    movlw 0x7E
+    subwf All_bits, 0,0
+    bz outputA
+
+    return
+
+
+Keypad_Num_Decode:
+    call Decode_Rows_Cols
+
+    ; ; what number is it?
+    movlw 0xFF
+    subwf All_bits, 0,0
+    bz outputNull
+    ;
+    ;
+    ; CHECK IF 1
+    movlw 0xEE
+    subwf All_bits, 0,0
+    bz output1
+
+    ; CHECK IF 2
+    movlw 0xED
+    subwf All_bits, 0,0
+    bz output2
+
+    ; CHECK IF 3
+    movlw 0xEB
+    subwf All_bits, 0,0
+    bz output1
+
+    ; CHECK IF F
+    ; movlw 0xE7
+    ; subwf All_bits, 0
+    ; bz output2
+
+
+    ; CHECK IF 4
+    movlw 0xDE
+    subwf All_bits, 0,0
+    bz output4
+
+    ; CHECK IF 5
+    movlw 0xDD
+    subwf All_bits, 0,0
+    bz output5
+
+    ; CHECK IF 6
+    movlw 0xDB
+    subwf All_bits, 0,0
+    bz output6
+
+    ; CHECK IF 7
+    movlw 0xBE
+    subwf All_bits, 0,0
+    bz output7
+
+    ; CHECK IF 8
+    movlw 0xBD
+    subwf All_bits, 0,0
+    bz output8
+
+    ; CHECK IF 9
+    movlw 0xBB
+    subwf All_bits, 0,0
+    bz output9
+
+    ; CHECK IF D
+    movlw 0xB7
+    subwf All_bits, 0,0
+    bz outputD
+
+    ; CHECK IF 0
+    movlw 0x7D
+    subwf All_bits, 0,0
+    bz output0
+
+    ; None of these options so NULL
+    bz outputIncorrect
+
+
+outputNull:
+    movlw 0x00
+    return
+
+output1:
+    movlw 0x1
+    return
+
+output2:
+    movlw 0x2
+    return
+
+output3:
+    movlw 0x3
+    return
+
+output4:
+    movlw 0x4
+    return
+
+output5:
+    movlw 0x5
+    return
+
+output6:
+    movlw 0x6
+    return
+
+output7:
+    movlw 0x7
+    return
+
+output8:
+    movlw 0x8
+    return
+
+output9:
+    movlw 0x9
+    return
+
+outputA:
+    movlw 0xA
+    return
+
+outputD:
+    movlw 0xD
+    return
+
+outputIncorrect:
+    return
+
+
+; ** a few delay routines below here as LCD timing can be quite critical ****
+LCD_delay_ms: ; delay given in ms in W
+    movwf LCD_cnt_ms, A
+lcdlp2:
+    movlw 250 ; 1 ms delay
+    call LCD_delay_x4us
+    decfsz LCD_cnt_ms, A
+    bra lcdlp2
+    return
+
+LCD_delay_x4us: ; delay given in chunks of 4 microsecond in W
+    movwf LCD_cnt_l, A ; now need to multiply by 16
+    swapf LCD_cnt_l, F, A ; swap nibbles
+    movlw 0x0f
+    andwf LCD_cnt_l, W, A ; move low nibble to W
+    movwf LCD_cnt_h, A ; then to LCD_cnt_h
+    movlw 0xf0
+    andwf LCD_cnt_l, F, A ; keep high nibble in LCD_cnt_l
+    call LCD_delay
+    return
+
+LCD_delay: ; delay routine 4 instruction loop == 250ns
+    movlw 0x00 ; W=0
+lcdlp1:
+    decf LCD_cnt_l, F, A ; no carry when 0x00 -> 0xff
+    subwfb LCD_cnt_h, F, A ; no carry when 0x00 -> 0xff
+    bc lcdlp1 ; carry, then loop again
+    return ; carry reset so return
 
 
 
-
-
- call Keypad_Num_Decode
- movwf decoded_value,A
- call LCD_Write_Hex
-
-
- call Enable_Interrupt
- goto feedbackloop
-
-
-feedbackloop:
-
- ; check LED change flag
-     ;YES - call LED light change
- ; is A pressed on keyboard?
-     ; disbale interrupts, branch back to targetInput
-
-
- bra feedbackloop
-
-;
-
-
- return
-
-
-changeLEDs:
-
- return
-
-end rst
+end

@@ -10962,7 +10962,6 @@ extrn UART_Setup, UART_Transmit_Message ; external uart subroutines
 extrn LCD_Setup, LCD_Write_Message, LCD_Write_Hex, LCD_Clear, LCD_delay_ms ; external LCD subroutines
 extrn ADC_Setup, ADC_Read ; external ADC subroutines
 extrn ADC_Interrupt_Service, Enable_Interrupt
-extrn Keypad_Setup, Keypad_Num_Decode, Keypad_A_Decode
 
 
 psect udata_acs ; reserve data space in access ram
@@ -10989,7 +10988,6 @@ RES2_2: ds 1
 
 carry: ds 1
 myNum: ds 1
-decoded_value: ds 1
 
 
 psect udata_bank4 ; reserve data anywhere in RAM (here at 0x400)
@@ -11008,29 +11006,20 @@ psect code, abs
 rst: org 0x0
   goto setup
 
+
 int_hi: org 0x0008 ; high vector, no low vector
  goto ADC_Interrupt_Service
 
  ; ******* Programme FLASH read Setup Code ***********************
 setup: bcf ((EECON1) and 0FFh), 6, a ; point to Flash program memory
  bsf ((EECON1) and 0FFh), 7, a ; access Flash program memory
- call LCD_Setup
+ call UART_Setup ; setup UART
+ call LCD_Setup ; setup UART
  call ADC_Setup ; setup ADC
- call Keypad_Setup
  goto targetInput
-
-
 
 targetInput:
  ; ((RCON) and 0FFh), 3, a DO
-
-
-
-
-
- call Keypad_Num_Decode
- movwf decoded_value,A
- call LCD_Write_Hex
 
 
  call Enable_Interrupt

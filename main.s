@@ -4,6 +4,7 @@ extrn	UART_Setup, UART_Transmit_Message  ; external uart subroutines
 extrn	LCD_Setup, LCD_Write_Message, LCD_Write_Hex, LCD_Clear, LCD_delay_ms ; external LCD subroutines
 extrn	ADC_Setup, ADC_Read		   ; external ADC subroutines
 extrn	ADC_Interrupt_Service, Enable_Interrupt	
+extrn	Keypad_Setup, Keypad_Num_Decode, Keypad_A_Decode
     
     
 psect	udata_acs   ; reserve data space in access ram
@@ -30,6 +31,8 @@ RES2_2:	  ds 1
     
 carry:	  ds 1
 myNum:	  ds 1  
+decoded_value:	ds 1
+digits_counter:	ds 1
     
     
 psect	udata_bank4 ; reserve data anywhere in RAM (here at 0x400)
@@ -47,7 +50,6 @@ myTable:
 psect	code, abs	
 rst: 	org 0x0
  	goto	setup
-
 	
 int_hi:	org	0x0008	; high vector, no low vector
 	goto	ADC_Interrupt_Service
@@ -55,12 +57,42 @@ int_hi:	org	0x0008	; high vector, no low vector
 	; ******* Programme FLASH read Setup Code ***********************
 setup:	bcf	CFGS	; point to Flash program memory  
 	bsf	EEPGD 	; access Flash program memory
-	call	UART_Setup	; setup UART
-	call	LCD_Setup	; setup UART
+	call	LCD_Setup	
 	call	ADC_Setup	; setup ADC
+	call	Keypad_Setup
 	goto	targetInput
+		
+inputDigitsLoop:
+	call	Keypad_Num_Decode
 	
-targetInput:
+	subwf	0xFF, 0, 0 
+	bz	inputDigitsLoop	; if null, loop again
+	
+	; if not zero, user made input
+	
+	movwf	decoded_value,A
+	
+	; if input D, finsihed entering, branch back 
+	subwf	0xB7, 0, 0 
+	bz	combineInput
+	
+	; else a numerical digit has been entered
+	movlw	1
+	addwf	inputDigitsLoop, 1, 0
+	;movff	decoded_value,			; TODO: second f is INCREMENTING IN RAM
+	movf	decoded_value, 0, 0
+	call	LCD_Write_Hex
+	
+	bra	inputDigitsLoop
+	
+	
+	
+targetInput:	
+	;call	inputDigitsLoop			; TODO: uncomment
+	
+combineInput:	
+    	
+	; TO DO
     
 	call	Enable_Interrupt
 	goto	feedbackloop
@@ -68,12 +100,22 @@ targetInput:
 	
 feedbackloop:
 	
+	; check LED change flag
+	    ;YES - call LED light change
+	; is A pressed on keyboard?
+	    ; disbale interrupts, branch back to targetInput
+    
     
 	bra feedbackloop
    
 ;	
 	
 
+	return
+	
+	
+changeLEDs:
+    
 	return
 
 end	rst

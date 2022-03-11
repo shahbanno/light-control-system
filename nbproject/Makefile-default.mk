@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=LCD.S ACD.s UART.s main.s config.s DAC_Interrupt.s
+SOURCEFILES_QUOTED_IF_SPACED=LCD.S ACD.s UART.s main.s config.s DAC_Interrupt.s test.s keypad.s
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/LCD.o ${OBJECTDIR}/ACD.o ${OBJECTDIR}/UART.o ${OBJECTDIR}/main.o ${OBJECTDIR}/config.o ${OBJECTDIR}/DAC_Interrupt.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/ACD.o.d ${OBJECTDIR}/UART.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/config.o.d ${OBJECTDIR}/DAC_Interrupt.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/LCD.o ${OBJECTDIR}/ACD.o ${OBJECTDIR}/UART.o ${OBJECTDIR}/main.o ${OBJECTDIR}/config.o ${OBJECTDIR}/DAC_Interrupt.o ${OBJECTDIR}/test.o ${OBJECTDIR}/keypad.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/ACD.o.d ${OBJECTDIR}/UART.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/config.o.d ${OBJECTDIR}/DAC_Interrupt.o.d ${OBJECTDIR}/test.o.d ${OBJECTDIR}/keypad.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/LCD.o ${OBJECTDIR}/ACD.o ${OBJECTDIR}/UART.o ${OBJECTDIR}/main.o ${OBJECTDIR}/config.o ${OBJECTDIR}/DAC_Interrupt.o
+OBJECTFILES=${OBJECTDIR}/LCD.o ${OBJECTDIR}/ACD.o ${OBJECTDIR}/UART.o ${OBJECTDIR}/main.o ${OBJECTDIR}/config.o ${OBJECTDIR}/DAC_Interrupt.o ${OBJECTDIR}/test.o ${OBJECTDIR}/keypad.o
 
 # Source Files
-SOURCEFILES=LCD.S ACD.s UART.s main.s config.s DAC_Interrupt.s
+SOURCEFILES=LCD.S ACD.s UART.s main.s config.s DAC_Interrupt.s test.s keypad.s
 
 
 
@@ -142,6 +142,22 @@ ${OBJECTDIR}/DAC_Interrupt.o: DAC_Interrupt.s  nbproject/Makefile-${CND_CONF}.mk
 	DAC_Interrupt.s \
 	 -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
 	
+${OBJECTDIR}/test.o: test.s  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/test.o 
+	${MP_AS} -mcpu=PIC18F87K22 -c \
+	-o ${OBJECTDIR}/test.o \
+	test.s \
+	 -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
+	
+${OBJECTDIR}/keypad.o: keypad.s  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/keypad.o 
+	${MP_AS} -mcpu=PIC18F87K22 -c \
+	-o ${OBJECTDIR}/keypad.o \
+	keypad.s \
+	 -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
+	
 else
 ${OBJECTDIR}/LCD.o: LCD.S  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
@@ -189,6 +205,22 @@ ${OBJECTDIR}/DAC_Interrupt.o: DAC_Interrupt.s  nbproject/Makefile-${CND_CONF}.mk
 	${MP_AS} -mcpu=PIC18F87K22 -c \
 	-o ${OBJECTDIR}/DAC_Interrupt.o \
 	DAC_Interrupt.s \
+	 -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
+	
+${OBJECTDIR}/test.o: test.s  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/test.o 
+	${MP_AS} -mcpu=PIC18F87K22 -c \
+	-o ${OBJECTDIR}/test.o \
+	test.s \
+	 -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
+	
+${OBJECTDIR}/keypad.o: keypad.s  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/keypad.o 
+	${MP_AS} -mcpu=PIC18F87K22 -c \
+	-o ${OBJECTDIR}/keypad.o \
+	keypad.s \
 	 -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
 	
 endif
