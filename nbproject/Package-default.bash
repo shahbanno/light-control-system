@@ -10,9 +10,9 @@ CND_CONF=default
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/light-control-system.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=light-control-system.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=light-control-system/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/light-control-system-please.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=light-control-system-please.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=light-control-system-please/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/light-control-system/bin
+makeDirectory ${TMPDIR}/light-control-system-please/bin
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/light-control-system.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/light-control-system-please.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/light-control-system.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/light-control-system-please.tar *
 checkReturnCode
 
 # Cleanup

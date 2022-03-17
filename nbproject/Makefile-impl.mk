@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=light-control-system
+PROJECTNAME=light-control-system-please
 
 # Active Configuration
 DEFAULTCONF=default

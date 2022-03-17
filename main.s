@@ -1,11 +1,13 @@
 #include <xc.inc>
-
+  
 extrn	UART_Setup, UART_Transmit_Message  ; external uart subroutines
 extrn	LCD_Setup, LCD_Write_Message, LCD_Write_Hex, LCD_Clear, LCD_delay_ms ; external LCD subroutines
 extrn	ADC_Setup, ADC_Read		   ; external ADC subroutines
 extrn	ADC_Interrupt_Service, Enable_Interrupt	
 extrn	Keypad_Setup, Keypad_Num_Decode, Keypad_A_Decode
+
     
+extrn	memTest
     
 psect	udata_acs   ; reserve data space in access ram
 
@@ -17,8 +19,8 @@ Q2_LO:		ds 1
 Q1_LO:		ds 1
 Q2_HI:		ds 1
 Q1_HI:		ds 1
-R_LO:		ds 1
-R_HI:		ds 1
+invert_HI:	ds 1
+invert_LO:	ds 1
 temp_HI:	ds 1
 temp_LO:	ds 1
     
@@ -48,7 +50,7 @@ setup:	bcf	CFGS	; point to Flash program memory
 	call	Keypad_Setup
 	call	Values_Loading
 	movlw	0x00
-	movwf	TRISF, A
+	movwf	TRISD, A
 	movlw	0x00
 	movwf	TRISJ, A
 	movlw	0x00
@@ -93,22 +95,6 @@ combineInput:
 	; TO DO
 	; TODO: CONVERT TO ADC 
 	
-	
-	; EXPERIMENTING WITH =VE AND +VE NUMBERS
-;	movlw	20
-;	movwf	test, A
-;	
-;	movlw	5
-;	subwf	test,0,0	    ; 20 -5 stored back in W
-;	
-;	movlw	5
-;	movwf	test, A
-;	
-;	movlw	20
-;	subwf	test,0,0	    ; 5-15 stored back in W
-;	movwf	PORTC, A
-
-	
 	movlw	0x09
 	movwf	Q2_LO, A
 	
@@ -126,44 +112,27 @@ combineInput:
     
 	call sixteen_SUB
 	
+	
+	movlw	0000B		; TO REMOVE    
+	movwf	Q1_LO, A	; TO REMOVE
+	
+	
 	movff Q1_HI, PORTD ; temp/check	    
 	movff Q1_LO, PORTJ ; temp/check
 	
 	
-	; check if negative
-	
-	movlw	0xFF
-	xorwf	Q1_HI, 0, 0
-	movwf	temp_HI, A
+	call  twobyte_negative
 	
 	
-	movlw	0xFF
-	xorwf	Q1_LO, 0, 0
-	movwf	temp_LO, A
+	movff invert_HI, PORTD ; temp/check	    
+	movff invert_LO, PORTJ ; temp/check
 	
 	
 	
-	movff temp_HI, PORTD ; temp/check  
-	movff temp_LO, PORTJ ; temp/check
-	
-	
-	movlw	1
-	addwfc	temp_LO, 1, 0
-	
-	
-	btfsc STATUS, C, 0
-	incfsz temp_HI, W, A
-	
-	
-	
-	
-	movff temp_HI, PORTD ; temp/check
-	movff temp_LO, PORTJ ; temp/check
 	
 	
 	; hardcoding in target for now 
-	
-	
+
 	
 	movlw	0x00
     	movwf	PORTD, A	; lower 
@@ -171,6 +140,10 @@ combineInput:
 	movlw	0xFF
 	movwf	PORTJ, A	; upper
 		
+	
+	
+	
+	
 	call	Enable_Interrupt
 	goto	feedbackloop
 	
@@ -182,8 +155,44 @@ sixteen_SUB:	;  http://www.piclist.com/techref/microchip/math/sub/16bb.htm
 	incfsz Q2_HI, W, A
 	subwf Q1_HI, A
 	
-	RETURN
+	RETURN	
+	
 
+twobyte_negative:
+	; makes Q1_HI;Q1_LO negative and stores in invert_HI;invert_LO
+	
+	; check if negative
+	movlw	0xFF
+	xorwf	Q1_HI, 0, 0
+	movwf	invert_HI, A
+	
+	movlw	0xFF
+	xorwf	Q1_LO, 0, 0
+	movwf	invert_LO, A
+	
+;	movff invert_HI, PORTD ; temp/check  to see if normal inversion worked
+;	movff invert_LO, PORTJ ; temp/check
+	
+	movlw	0xFF
+	subwf	invert_LO, 0, 0
+	bz	carry
+	
+;	movff invert_HI, PORTD ; temp/check
+;	movff invert_LO, PORTJ ; temp/check
+;	
+	return 
+	
+carry:	movlw	0xFE
+	movwf	invert_LO, A
+	
+	movlw	1
+	addwf	invert_HI, 1, 0
+	
+;	movff invert_HI, PORTD ; temp/check
+;	movff invert_LO, PORTJ ; temp/check
+	
+	return 
+	
 	
 feedbackloop:
 	
@@ -193,9 +202,9 @@ feedbackloop:
 	; is A pressed on keyboard?
 	    ; disbale interrupts, branch back to targetInput
     
+	movff memTest, PORTD, A
+	    
 	bra feedbackloop
-   
-	return
 	
 	
 changeLEDs:

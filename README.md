@@ -4,7 +4,6 @@ Repository for Physics Year 3 microprocessors lab
 Tasks:
 
     MIDWAY:
-        test inversion, test lower bit carry
         add our test bits (x-1) by actual bit, if 0 then og was negative, else positive
         for negative one, proceed  with the x-1 version
 

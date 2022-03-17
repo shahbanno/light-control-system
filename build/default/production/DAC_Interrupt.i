@@ -10956,13 +10956,20 @@ stk_offset SET 0
 auto_size SET 0
 ENDM
 # 5 "C:\\Program Files\\Microchip\\xc8\\v2.32\\pic\\include\\xc.inc" 2 3
-# 2 "DAC_Interrupt.s" 2
+# 1 "DAC_Interrupt.s" 2
+
 
 global ADC_Interrupt_Service, Enable_Interrupt
+
+global memTest
 
 extrn LCD_Write_Hex, LCD_Clear ; external LCD subroutines
 extrn ADC_Read ; external ADC subroutines
 psect dac_code, class=CODE
+
+psect udata_acs ; reserve data space in access ram
+memTest: ds 1
+
 
 ADC_Interrupt_Service:
  ; ((RCON) and 0FFh), 3, a REMOVE BELOW
@@ -10976,6 +10983,12 @@ ADC_Interrupt_Service:
  call LCD_Write_Hex
  movf ADRESL, W, A
  call LCD_Write_Hex
+
+
+ movlw 0xFF
+ movwf memTest, A
+
+
 
 
  bcf ((INTCON) and 0FFh), 2, a ; clear interrupt flag

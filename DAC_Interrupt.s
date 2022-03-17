@@ -1,10 +1,17 @@
 #include <xc.inc>
 	
 global	ADC_Interrupt_Service, Enable_Interrupt
+
+global	memTest
     
 extrn	LCD_Write_Hex, LCD_Clear ; external LCD subroutines
 extrn	ADC_Read		   ; external ADC subroutines    
+    
+psect	udata_acs   ; reserve data space in access ram
+memTest: ds 1
+    
 psect	dac_code, class=CODE
+    
 	
 ADC_Interrupt_Service:	
 	; TO REMOVE BELOW
@@ -18,6 +25,12 @@ ADC_Interrupt_Service:
 	call	LCD_Write_Hex
 	movf	ADRESL, W, A
 	call	LCD_Write_Hex
+	
+	
+	movlw	0xFF
+	movwf	memTest, A
+	
+	
 	
 
 	bcf	TMR0IF		; clear interrupt flag
