@@ -6,23 +6,21 @@ extrn	ADC_Setup, ADC_Read		   ; external ADC subroutines
 extrn	ADC_Interrupt_Service, Enable_Interrupt	
 extrn	Keypad_Setup, Keypad_Num_Decode, Keypad_A_Decode
 
+extrn	sixteen_SUB, twobyte_negative
+extrn	invert_HI, invert_LO
     
-extrn	memTest
+global	Q2_LO, Q1_LO, Q2_HI, Q1_HI
     
 psect	udata_acs   ; reserve data space in access ram
 
 decoded_value:	ds 1
 test:		ds 1
-num1:		ds 1
-num2:		ds 1
+temp_HI:	ds 1
+temp_LO:	ds 1
 Q2_LO:		ds 1
 Q1_LO:		ds 1
 Q2_HI:		ds 1
 Q1_HI:		ds 1
-invert_HI:	ds 1
-invert_LO:	ds 1
-temp_HI:	ds 1
-temp_LO:	ds 1
     
 psect	udata_bank4 ; reserve data anywhere in RAM (here at 0x400)
 ;myArray:    ds 0x80 ; reserve 128 bytes for message data
@@ -110,7 +108,7 @@ combineInput:
 	movff Q1_HI, PORTD
 	movff Q1_LO, PORTJ
     
-	call sixteen_SUB
+	;call sixteen_SUB
 	
 	
 	movlw	0000B		; TO REMOVE    
@@ -129,8 +127,6 @@ combineInput:
 	
 	
 	
-	
-	
 	; hardcoding in target for now 
 
 	
@@ -140,58 +136,8 @@ combineInput:
 	movlw	0xFF
 	movwf	PORTJ, A	; upper
 		
-	
-	
-	
-	
 	call	Enable_Interrupt
 	goto	feedbackloop
-	
-sixteen_SUB:	;  http://www.piclist.com/techref/microchip/math/sub/16bb.htm
-	movf Q2_LO, W, A
-	subwf Q1_LO, A
-	movf Q2_HI, W, A
-	btfss STATUS, C, 0
-	incfsz Q2_HI, W, A
-	subwf Q1_HI, A
-	
-	RETURN	
-	
-
-twobyte_negative:
-	; makes Q1_HI;Q1_LO negative and stores in invert_HI;invert_LO
-	
-	; check if negative
-	movlw	0xFF
-	xorwf	Q1_HI, 0, 0
-	movwf	invert_HI, A
-	
-	movlw	0xFF
-	xorwf	Q1_LO, 0, 0
-	movwf	invert_LO, A
-	
-;	movff invert_HI, PORTD ; temp/check  to see if normal inversion worked
-;	movff invert_LO, PORTJ ; temp/check
-	
-	movlw	0xFF
-	subwf	invert_LO, 0, 0
-	bz	carry
-	
-;	movff invert_HI, PORTD ; temp/check
-;	movff invert_LO, PORTJ ; temp/check
-;	
-	return 
-	
-carry:	movlw	0xFE
-	movwf	invert_LO, A
-	
-	movlw	1
-	addwf	invert_HI, 1, 0
-	
-;	movff invert_HI, PORTD ; temp/check
-;	movff invert_LO, PORTJ ; temp/check
-	
-	return 
 	
 	
 feedbackloop:
@@ -202,8 +148,6 @@ feedbackloop:
 	; is A pressed on keyboard?
 	    ; disbale interrupts, branch back to targetInput
     
-	movff memTest, PORTD, A
-	    
 	bra feedbackloop
 	
 	
