@@ -3,6 +3,8 @@ Repository for Physics Year 3 microprocessors lab
 
 Tasks:
 
+FIX SUBTRACTON 
+
 MEMORY LOCATIONS W EXTERNAL/GLOBAL IN OPERATIONS NOT WORKING 
 
     MIDWAY:
@@ -26,5 +28,8 @@ Convert decoded digits to decoded number
 
 Multiplex??
 
+for input, make i ascii so its not 010203 as opposed to 123
+
+give more bytes to the keypad (remove postinc?)
 
 Power by solar cell ?

@@ -49,8 +49,9 @@ Decode_Rows_Cols:
 
     movf Row_bits, W, A
     iorwf Col_bits, 0,0
-    movwf PORTH, A
-    movff LATH, All_bits, A
+;    movwf PORTH, A
+;    movff LATH, All_bits, A
+    movwf All_bits
     
     return 
     
@@ -85,7 +86,7 @@ Keypad_Num_Decode:
     ; CHECK IF 3
     movlw 0xEB
     subwf All_bits, 0,0
-    bz output1
+    bz output3
 
     ; CHECK IF F
     ; movlw 0xE7

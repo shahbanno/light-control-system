@@ -10961,8 +10961,7 @@ stk_offset SET 0
 auto_size SET 0
 ENDM
 # 5 "C:\\Program Files\\Microchip\\xc8\\v2.32\\pic\\include\\xc.inc" 2 3
-# 5 "config.s" 2
-
+# 6 "config.s" 2
 
 ; CONFIG1L
   CONFIG RETEN = ON ; VREG Sleep Enable bit (Enabled)

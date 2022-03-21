@@ -10959,27 +10959,30 @@ ENDM
 # 1 "main.s" 2
 
 
+;global targ_HI, targ_LO
+
 extrn UART_Setup, UART_Transmit_Message ; external uart subroutines
 extrn LCD_Setup, LCD_Write_Message, LCD_Write_Hex, LCD_Clear, LCD_delay_ms ; external LCD subroutines
 extrn ADC_Setup, ADC_Read ; external ADC subroutines
 extrn ADC_Interrupt_Service, Enable_Interrupt
 extrn Keypad_Setup, Keypad_Num_Decode, Keypad_A_Decode
 
-extrn sixteen_SUB, twobyte_negative
-extrn invert_HI, invert_LO
 
-global Q2_LO, Q1_LO, Q2_HI, Q1_HI
+extrn sixteen_sub, twobyte_negative
+extrn Q2_LO, Q1_LO, Q2_HI, Q1_HI, invert_HI, invert_LO
+
+
 
 psect udata_acs ; reserve data space in access ram
 
 decoded_value: ds 1
 test: ds 1
+temp: ds 1
 temp_HI: ds 1
 temp_LO: ds 1
-Q2_LO: ds 1
-Q1_LO: ds 1
-Q2_HI: ds 1
-Q1_HI: ds 1
+counter: ds 1
+
+first_loc: ds 4 ; this MUST be the last memory location to be defined
 
 psect udata_bank4 ; reserve data anywhere in RAM (here at 0x400)
 ;myArray: ds 0x80 ; reserve 128 bytes for message data
@@ -11005,7 +11008,7 @@ setup: bcf ((EECON1) and 0FFh), 6, a ; point to Flash program memory
  call LCD_Setup
  call ADC_Setup ; setup ADC
  call Keypad_Setup
- call Values_Loading
+; call Values_Loading
  movlw 0x00
  movwf TRISD, A
  movlw 0x00
@@ -11015,39 +11018,53 @@ setup: bcf ((EECON1) and 0FFh), 6, a ; point to Flash program memory
  goto targetInput
 
 
-Values_Loading:
-
 
  return
 
 inputDigitsLoop:
  call Keypad_Num_Decode
-
- subwf 0xFF, 0, 0
+ movwf decoded_value, A
+ movlw 0xFF
+ subwf decoded_value, 0, 0
  bz inputDigitsLoop ; if null, loop again
 
  ; if not zero, user made input
 
- movwf decoded_value,A
-
 
  ; if input D, finsihed entering, branch back
- subwf 0xB7, 0, 0
+ movlw 0xD
+ subwf decoded_value, 0, 0
  bz combineInput
 
  ; else a numerical digit has been entered
- movlw 1
- addwf inputDigitsLoop, 1, 0
- ;movff decoded_value, ; TODO: second f is INCREMENTING IN RAM
- movf decoded_value, 0, 0
- call LCD_Write_Hex
+ movff decoded_value, POSTINC0 ;store, increment
+ movf counter, W, A
+ incf counter, A ; increment the counter
+ movf counter, W, A
+ movf decoded_value, 0, 0 ; move decoded val to W to write it
+ call LCD_Write_Hex ; write to LCD
+ movlw 0xFFFF
+ call LCD_delay_ms
 
  bra inputDigitsLoop
 
 targetInput:
- ;call inputDigitsLoop ; TODO: uncomment
+ lfsr 0, first_loc ; set up inrecementation
+ movlw 0
+ movwf counter, A
+ call inputDigitsLoop
 
 combineInput:
+     ; To remove
+ call LCD_Clear
+ lfsr 0, first_loc
+combineInput_loop:
+ movf POSTINC0, W, A
+ call LCD_Write_Hex
+ movf counter, W, A
+ decfsz counter, A
+
+ bra combineInput_loop
 
  ; ((RCON) and 0FFh), 3, a DO
  ; TODO: CONVERT ((RCON) and 0FFh), 3, a ADC
@@ -11078,11 +11095,11 @@ combineInput:
  movff Q1_LO, PORTJ ; temp/check
 
 
- call twobyte_negative
+ ;call twobyte_negative
 
 
- movff invert_HI, PORTD ; temp/check
- movff invert_LO, PORTJ ; temp/check
+; movff invert_HI, PORTD ; temp/check
+; movff invert_LO, PORTJ ; temp/check
 
 
 
@@ -11115,5 +11132,12 @@ changeLEDs:
  movwf PORTC, A
 
  return
+
+
+;movff first_loc,
+;call sixteen_multiply
+;
+
+
 
 end rst
