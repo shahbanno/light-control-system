@@ -10967,8 +10967,9 @@ extrn ADC_Interrupt_Service, Enable_Interrupt
 extrn Keypad_Setup, Keypad_Num_Decode, Keypad_A_Decode
 
 
-extrn sixteen_sub, twobyte_negative
+extrn sixteen_sub, twobyte_negative, sixteen_multiply
 extrn Q2_LO, Q1_LO, Q2_HI, Q1_HI, invert_HI, invert_LO
+extrn ARG1H, ARG1L, ARG2H, ARG2L, RES0, RES1, RES2, RES3
 
 extrn ADCchange_HI, ADCchange_LO
 
@@ -10991,6 +10992,13 @@ one_LED_LO: ds 1
 
 num_LEDS_to_change: ds 1
 
+
+thou_hi: ds 1
+thou_lo: ds 1
+hun_hi: ds 1
+hun_lo: ds 1
+ten: ds 1
+unit: ds 1
 
 
 first_loc: ds 4 ; this MUST be the last memory location to be defined
@@ -11079,42 +11087,195 @@ inputDigitsLoop:
  bra inputDigitsLoop
 
 targetInput:
+ movlw 0 ; initialise values
+ movwf thou_hi, A
+ movwf thou_lo, A
+ movwf hun_hi, A
+ movwf hun_lo, A
+ movwf ten, A
+ movwf unit, A
+
+
  lfsr 0, first_loc ; set up inrecementation
  movlw 0
  movwf counter, A
  call inputDigitsLoop
 
 combineInput:
-     ; To remove
- call LCD_Clear
- lfsr 0, first_loc
-combineInput_loop:
- movf POSTINC0, W, A
- call LCD_Write_Hex
- movf counter, W, A
- decfsz counter, A
+     ; THIS JUST RECALLS WHAT WAS INPUT USING POSTINC
+; call LCD_Clear
+; lfsr 0, first_loc
+;combineInput_loop:
+; movf POSTINC0, W, A
+; call LCD_Write_Hex
+; movf counter, W, A
+; decfsz counter, A
+;
+; bra combineInput_loop
 
- bra combineInput_loop
+
+ bra test_size
+
+
+save_input:
+ movff thou_hi, targ_HI, A ; upper
+ movff thou_lo, targ_LO, A ; lower
+
+ movf thou_hi, W, A ; to remove
+ movf thou_lo, W, A ; to remove
+
+ movf targ_HI, W, A ; to remove
+ movf targ_LO, W, A ; to remove
+
 
  ; TODO: CONVERT ((RCON) and 0FFh), 3, a ADC
 
 
- ; hardcoding in target for now TODO
-
-
- movlw 0x00
-     movwf targ_HI, A ; upper
-
- movlw 0xFF
- movwf targ_LO, A ; lower
-
+ ; hardcoding in target
+; movlw 0x00
+; movwf targ_HI, A ; upper
+;
+; movlw 0xFF
+; movwf targ_LO, A ; lower
 
 
  call Enable_Interrupt
  goto feedbackloop
 
 
-;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+test_size:
+ ; check the number of digits
+
+ lfsr 0, first_loc ; reset incrementation (need this for later)
+
+ movlw 0x4
+ subwf counter, 0, 0
+ bz thous
+
+ movlw 0x3
+ subwf counter, 0, 0
+ bz huns
+
+ movlw 0x2
+ subwf counter, 0, 0
+ bz tes
+
+ movlw 0x1
+ subwf counter, 0, 0
+ bz unis
+
+thous:
+ call thousands
+ call hundreds
+ call tens
+ call units
+ call sum
+ bra save_input
+
+huns:
+ call hundreds
+ call tens
+ call units
+ call sum
+ bra save_input
+tes:
+ call tens
+ call units
+ call sum
+ bra save_input
+unis:
+ call units
+ call sum
+ bra save_input
+
+thousands:
+ ; thousands can go up to 4095 which is 0xFFF - 12 bits
+ ; and 1000 = 0x3e8
+ ; using 16x16 multiplier and its arguments/results
+
+ ; set 1000 as arg1
+ movlw 0x3
+ movwf ARG1H, A
+ movlw 0xe8
+ movwf ARG1L, A
+
+ ; set digit as arg2L, arg2H = 0
+ movlw 0
+ movwf ARG2H, A
+ movff POSTINC0, ARG2L, A
+
+
+
+
+ call sixteen_multiply
+
+ ; get a sixteen bit result and store it in hi and lo
+
+ movff RES1, thou_hi, A
+ movff RES0, thou_lo, A
+ return
+
+hundreds:
+ ;hundreds can go up to 999 which is 0x3E7 - 12 bits
+ ; and 100 = 0x64
+ ; using 16x16 multiplier to do 12x8 as before
+
+ ; set 100 as ARG1L, ARG1H = 0
+ movlw 0
+ movwf ARG1H, A
+ movlw 0x64
+ movwf ARG1L, A
+
+ ; set digit as arg2L, arg2H = 0
+ movlw 0
+ movwf ARG2H, A
+ movff POSTINC0, ARG2L, A
+
+ call sixteen_multiply
+
+ ; get a sixteen bit result and store it in hi and lo
+
+ movff RES1, hun_hi, A
+ movff RES0, hun_lo, A
+ return
+
+tens:
+ ; tens can go up to 99 = 0x63 - only 8 bits
+ ; and 10 = 0xA
+ ; just use the builtin multiplier mulwf
+ movlw 0xA
+ mulwf POSTINC0, A
+ movff PRODL, ten
+ return
+
+units:
+ ; units dont need to be multiplied by anything
+ movff POSTINC0, unit, A
+ return
+
+sum:
+ ; time to add it all up
+ movf ten, W, A
+ addwf unit, 0, 0
+ ;movwf tent, A
+
+ ;movf tent, W, A
+ addwf hun_lo, 1, 0
+ btfsc STATUS, C, 0
+ incf hun_hi, A
+
+ movf hun_lo, W, A
+ addwf thou_lo, 1, 0
+ movf hun_hi, W, A
+ addwfc thou_hi, 1, 0
+ return
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 feedbackloop:
 
  ; if any digit in amount to change is non-zero, branch to changing LEDs
@@ -11126,10 +11287,18 @@ feedbackloop:
  bnz changeLEDs
 
 keypadCheck:
-
-
  ; is A pressed on keyboard?
      ; disbale interrupts, branch back to targetInput
+
+
+;
+; call Keypad_A_Decode
+; movwf decoded_value, A
+; movlw 0xA
+; subwf decoded_value, 0, 0
+; bz targetInput ; TODO: consider disabling interrupt?
+
+
  bra feedbackloop
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -11170,7 +11339,7 @@ rotate_right: ;off
  rrcf PORTC, A
  bcf STATUS, C, 0
  decf num_LEDS_to_change, A
- movf num_LEDS_to_change, W, A
+ movf num_LEDS_to_change, W, A ; ((RCON) and 0FFh), 3, a REMOVE
 
  bz gobackto_feedback
  bra rotate_right
@@ -11198,7 +11367,7 @@ rotate_left: ; on
 
  ; IF PORT C IS FF, THEN DONT DO THIS
  movlw 0xFF
- subwf PORTC, 0, 0 ; CAUSE FOR CONCERNNNNNNNNN, FF- "0" GIVES 1 IN W?
+ subwf PORTC, 0, 0 ; CAUSE FOR CONCERNNNNNNNNN, FF- 0 GIVES 1 IN W?
  ; TODO: output message saying max possible light?
  bz gobackto_feedback
 
@@ -11220,8 +11389,8 @@ rotate_Loop:
  addwf PORTC, A
 
  decf num_LEDS_to_change, A
- movf num_LEDS_to_change, W ; to remove
- movf num_LEDS_to_change, W, A
+ movf num_LEDS_to_change, W, A ; to remove
+ movf num_LEDS_to_change, W, A ; ((RCON) and 0FFh), 3, a REMOVE?
  bz gobackto_feedback ; finished changing LEDs
  bra rotate_Loop
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

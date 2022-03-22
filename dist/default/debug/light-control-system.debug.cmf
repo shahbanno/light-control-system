@@ -16,25 +16,25 @@ config CONFIG 4 300000 300000 E 1
 $build/default/debug/ACD.o
 adc_code CODE 0 1FD00 1FD00 1E 1
 $build/default/debug/LCD.o
-udata_acs_ovr COMRAM 1 2D 2D 1 1
-udata_acs COMRAM 1 25 25 5 1
+udata_acs_ovr COMRAM 1 33 33 1 1
+udata_acs COMRAM 1 2B 2B 5 1
 lcd_code CODE 0 1FEE2 1FEE2 11E 1
 config CONFIG 4 300000 300000 E 1
 $build/default/debug/DAC_Interrupt.o
-udata_acs COMRAM 1 2A 2A 2 1
+udata_acs COMRAM 1 30 30 2 1
 dac_code CODE 0 1FD46 1FD46 54 1
 $build/default/debug/UART.o
 uart_code CODE 0 1FD1E 1FD1E 28 1
-udata_acs COMRAM 1 2C 2C 1 1
+udata_acs COMRAM 1 32 32 1 1
 $build/default/debug/operations.o
 operations_code CODE 0 1FD9A 1FD9A 6A 1
-udata_acs COMRAM 1 F F E 1
+udata_acs COMRAM 1 15 15 E 1
 $build/default/debug/main.o
-code CODE 0 0 0 15C 1
+code CODE 0 0 0 21C 1
 data CONST 0 1FCF2 1FCF2 E 1
-udata_acs COMRAM 1 0 0 F 1
+udata_acs COMRAM 1 0 0 15 1
 $build/default/debug/keypad.o
-udata_acs COMRAM 1 1D 1D 8 1
+udata_acs COMRAM 1 23 23 8 1
 keypad_code CODE 0 1FE04 1FE04 DE 1
 # %UNUSED Section
 # This section enumerates the unused ranges of each CLASS. Each entry
@@ -54,18 +54,18 @@ BANK6 600-6FF 1
 BANK7 700-7FF 1
 BANK8 800-8FF 1
 BANK9 900-9FF 1
-CONST 15C-1FCF1 1
+CONST 21C-1FCF1 1
 IDLOC 200000-200007 1
 SMALLCONST 1000-1FCF1 1
-CODE 15C-1FCF1 1
+CODE 21C-1FCF1 1
 BANK10 A00-AFF 1
 BANK11 B00-BFF 1
 BANK12 C00-CFF 1
 BANK13 D00-DFF 1
 BANK14 E00-EFF 1
 BANK15 F00-F15 1
-BIGRAM 15C-F15 1
-COMRAM 2E-5F 1
+BIGRAM 21C-F15 1
+COMRAM 34-5F 1
 EEDATA F00000-F003FF 1
 MEDIUMCONST 1000-FFFF 1
 MEDIUMCONST 11000-1FCF1 1
@@ -270,196 +270,268 @@ $build/default/debug/UART.o
 1FD42 uart_code CODE >33:H:\Post21\happy\light-control-system\UART.s
 1FD44 uart_code CODE >34:H:\Post21\happy\light-control-system\UART.s
 $build/default/debug/operations.o
-1FD9A operations_code CODE >36:H:\Post21\happy\light-control-system\operations.s
-1FD9C operations_code CODE >37:H:\Post21\happy\light-control-system\operations.s
-1FD9E operations_code CODE >38:H:\Post21\happy\light-control-system\operations.s
-1FDA0 operations_code CODE >40:H:\Post21\happy\light-control-system\operations.s
-1FDA2 operations_code CODE >41:H:\Post21\happy\light-control-system\operations.s
-1FDA4 operations_code CODE >42:H:\Post21\happy\light-control-system\operations.s
-1FDA6 operations_code CODE >47:H:\Post21\happy\light-control-system\operations.s
-1FDA8 operations_code CODE >48:H:\Post21\happy\light-control-system\operations.s
-1FDAA operations_code CODE >49:H:\Post21\happy\light-control-system\operations.s
-1FDAC operations_code CODE >51:H:\Post21\happy\light-control-system\operations.s
-1FDAE operations_code CODE >52:H:\Post21\happy\light-control-system\operations.s
-1FDB0 operations_code CODE >53:H:\Post21\happy\light-control-system\operations.s
-1FDB2 operations_code CODE >58:H:\Post21\happy\light-control-system\operations.s
-1FDB4 operations_code CODE >59:H:\Post21\happy\light-control-system\operations.s
-1FDB6 operations_code CODE >60:H:\Post21\happy\light-control-system\operations.s
-1FDB8 operations_code CODE >62:H:\Post21\happy\light-control-system\operations.s
-1FDBA operations_code CODE >64:H:\Post21\happy\light-control-system\operations.s
-1FDBC operations_code CODE >65:H:\Post21\happy\light-control-system\operations.s
-1FDBE operations_code CODE >67:H:\Post21\happy\light-control-system\operations.s
-1FDC0 operations_code CODE >68:H:\Post21\happy\light-control-system\operations.s
-1FDC2 operations_code CODE >70:H:\Post21\happy\light-control-system\operations.s
-1FDC4 operations_code CODE >75:H:\Post21\happy\light-control-system\operations.s
-1FDC6 operations_code CODE >76:H:\Post21\happy\light-control-system\operations.s
-1FDC8 operations_code CODE >77:H:\Post21\happy\light-control-system\operations.s
-1FDCA operations_code CODE >79:H:\Post21\happy\light-control-system\operations.s
-1FDCE operations_code CODE >80:H:\Post21\happy\light-control-system\operations.s
-1FDD2 operations_code CODE >82:H:\Post21\happy\light-control-system\operations.s
-1FDD4 operations_code CODE >83:H:\Post21\happy\light-control-system\operations.s
-1FDD6 operations_code CODE >85:H:\Post21\happy\light-control-system\operations.s
-1FDDA operations_code CODE >86:H:\Post21\happy\light-control-system\operations.s
-1FDDE operations_code CODE >88:H:\Post21\happy\light-control-system\operations.s
-1FDE0 operations_code CODE >89:H:\Post21\happy\light-control-system\operations.s
-1FDE2 operations_code CODE >91:H:\Post21\happy\light-control-system\operations.s
-1FDE4 operations_code CODE >92:H:\Post21\happy\light-control-system\operations.s
-1FDE6 operations_code CODE >93:H:\Post21\happy\light-control-system\operations.s
-1FDE8 operations_code CODE >94:H:\Post21\happy\light-control-system\operations.s
-1FDEA operations_code CODE >95:H:\Post21\happy\light-control-system\operations.s
-1FDEC operations_code CODE >96:H:\Post21\happy\light-control-system\operations.s
-1FDEE operations_code CODE >97:H:\Post21\happy\light-control-system\operations.s
-1FDF0 operations_code CODE >99:H:\Post21\happy\light-control-system\operations.s
-1FDF2 operations_code CODE >100:H:\Post21\happy\light-control-system\operations.s
-1FDF4 operations_code CODE >102:H:\Post21\happy\light-control-system\operations.s
-1FDF6 operations_code CODE >103:H:\Post21\happy\light-control-system\operations.s
-1FDF8 operations_code CODE >104:H:\Post21\happy\light-control-system\operations.s
-1FDFA operations_code CODE >105:H:\Post21\happy\light-control-system\operations.s
-1FDFC operations_code CODE >106:H:\Post21\happy\light-control-system\operations.s
-1FDFE operations_code CODE >107:H:\Post21\happy\light-control-system\operations.s
-1FE00 operations_code CODE >108:H:\Post21\happy\light-control-system\operations.s
-1FE02 operations_code CODE >109:H:\Post21\happy\light-control-system\operations.s
+1FD9A operations_code CODE >37:H:\Post21\happy\light-control-system\operations.s
+1FD9C operations_code CODE >38:H:\Post21\happy\light-control-system\operations.s
+1FD9E operations_code CODE >39:H:\Post21\happy\light-control-system\operations.s
+1FDA0 operations_code CODE >41:H:\Post21\happy\light-control-system\operations.s
+1FDA2 operations_code CODE >42:H:\Post21\happy\light-control-system\operations.s
+1FDA4 operations_code CODE >43:H:\Post21\happy\light-control-system\operations.s
+1FDA6 operations_code CODE >48:H:\Post21\happy\light-control-system\operations.s
+1FDA8 operations_code CODE >49:H:\Post21\happy\light-control-system\operations.s
+1FDAA operations_code CODE >50:H:\Post21\happy\light-control-system\operations.s
+1FDAC operations_code CODE >52:H:\Post21\happy\light-control-system\operations.s
+1FDAE operations_code CODE >53:H:\Post21\happy\light-control-system\operations.s
+1FDB0 operations_code CODE >54:H:\Post21\happy\light-control-system\operations.s
+1FDB2 operations_code CODE >59:H:\Post21\happy\light-control-system\operations.s
+1FDB4 operations_code CODE >60:H:\Post21\happy\light-control-system\operations.s
+1FDB6 operations_code CODE >61:H:\Post21\happy\light-control-system\operations.s
+1FDB8 operations_code CODE >63:H:\Post21\happy\light-control-system\operations.s
+1FDBA operations_code CODE >65:H:\Post21\happy\light-control-system\operations.s
+1FDBC operations_code CODE >66:H:\Post21\happy\light-control-system\operations.s
+1FDBE operations_code CODE >68:H:\Post21\happy\light-control-system\operations.s
+1FDC0 operations_code CODE >69:H:\Post21\happy\light-control-system\operations.s
+1FDC2 operations_code CODE >71:H:\Post21\happy\light-control-system\operations.s
+1FDC4 operations_code CODE >76:H:\Post21\happy\light-control-system\operations.s
+1FDC6 operations_code CODE >77:H:\Post21\happy\light-control-system\operations.s
+1FDC8 operations_code CODE >78:H:\Post21\happy\light-control-system\operations.s
+1FDCA operations_code CODE >80:H:\Post21\happy\light-control-system\operations.s
+1FDCE operations_code CODE >81:H:\Post21\happy\light-control-system\operations.s
+1FDD2 operations_code CODE >83:H:\Post21\happy\light-control-system\operations.s
+1FDD4 operations_code CODE >84:H:\Post21\happy\light-control-system\operations.s
+1FDD6 operations_code CODE >86:H:\Post21\happy\light-control-system\operations.s
+1FDDA operations_code CODE >87:H:\Post21\happy\light-control-system\operations.s
+1FDDE operations_code CODE >89:H:\Post21\happy\light-control-system\operations.s
+1FDE0 operations_code CODE >90:H:\Post21\happy\light-control-system\operations.s
+1FDE2 operations_code CODE >92:H:\Post21\happy\light-control-system\operations.s
+1FDE4 operations_code CODE >93:H:\Post21\happy\light-control-system\operations.s
+1FDE6 operations_code CODE >94:H:\Post21\happy\light-control-system\operations.s
+1FDE8 operations_code CODE >95:H:\Post21\happy\light-control-system\operations.s
+1FDEA operations_code CODE >96:H:\Post21\happy\light-control-system\operations.s
+1FDEC operations_code CODE >97:H:\Post21\happy\light-control-system\operations.s
+1FDEE operations_code CODE >98:H:\Post21\happy\light-control-system\operations.s
+1FDF0 operations_code CODE >100:H:\Post21\happy\light-control-system\operations.s
+1FDF2 operations_code CODE >101:H:\Post21\happy\light-control-system\operations.s
+1FDF4 operations_code CODE >103:H:\Post21\happy\light-control-system\operations.s
+1FDF6 operations_code CODE >104:H:\Post21\happy\light-control-system\operations.s
+1FDF8 operations_code CODE >105:H:\Post21\happy\light-control-system\operations.s
+1FDFA operations_code CODE >106:H:\Post21\happy\light-control-system\operations.s
+1FDFC operations_code CODE >107:H:\Post21\happy\light-control-system\operations.s
+1FDFE operations_code CODE >108:H:\Post21\happy\light-control-system\operations.s
+1FE00 operations_code CODE >109:H:\Post21\happy\light-control-system\operations.s
+1FE02 operations_code CODE >110:H:\Post21\happy\light-control-system\operations.s
 $build/default/debug/main.o
-0 code CODE >52:H:\Post21\happy\light-control-system\main.s
-0 code CODE >53:H:\Post21\happy\light-control-system\main.s
-4 code CODE >55:H:\Post21\happy\light-control-system\main.s
-8 code CODE >56:H:\Post21\happy\light-control-system\main.s
-C code CODE >59:H:\Post21\happy\light-control-system\main.s
-E code CODE >60:H:\Post21\happy\light-control-system\main.s
-10 code CODE >61:H:\Post21\happy\light-control-system\main.s
-14 code CODE >62:H:\Post21\happy\light-control-system\main.s
-18 code CODE >63:H:\Post21\happy\light-control-system\main.s
-1C code CODE >64:H:\Post21\happy\light-control-system\main.s
-20 code CODE >65:H:\Post21\happy\light-control-system\main.s
-22 code CODE >66:H:\Post21\happy\light-control-system\main.s
-24 code CODE >67:H:\Post21\happy\light-control-system\main.s
-26 code CODE >68:H:\Post21\happy\light-control-system\main.s
-28 code CODE >69:H:\Post21\happy\light-control-system\main.s
-2A code CODE >70:H:\Post21\happy\light-control-system\main.s
-2C code CODE >73:H:\Post21\happy\light-control-system\main.s
-2E code CODE >74:H:\Post21\happy\light-control-system\main.s
-30 code CODE >75:H:\Post21\happy\light-control-system\main.s
-32 code CODE >76:H:\Post21\happy\light-control-system\main.s
-34 code CODE >77:H:\Post21\happy\light-control-system\main.s
-36 code CODE >78:H:\Post21\happy\light-control-system\main.s
-38 code CODE >82:H:\Post21\happy\light-control-system\main.s
-3C code CODE >86:H:\Post21\happy\light-control-system\main.s
-3E code CODE >89:H:\Post21\happy\light-control-system\main.s
-40 code CODE >90:H:\Post21\happy\light-control-system\main.s
-42 code CODE >91:H:\Post21\happy\light-control-system\main.s
-44 code CODE >92:H:\Post21\happy\light-control-system\main.s
-46 code CODE >94:H:\Post21\happy\light-control-system\main.s
-48 code CODE >98:H:\Post21\happy\light-control-system\main.s
-4C code CODE >99:H:\Post21\happy\light-control-system\main.s
-4E code CODE >100:H:\Post21\happy\light-control-system\main.s
-50 code CODE >101:H:\Post21\happy\light-control-system\main.s
-52 code CODE >102:H:\Post21\happy\light-control-system\main.s
-54 code CODE >107:H:\Post21\happy\light-control-system\main.s
-56 code CODE >108:H:\Post21\happy\light-control-system\main.s
-58 code CODE >109:H:\Post21\happy\light-control-system\main.s
-5A code CODE >112:H:\Post21\happy\light-control-system\main.s
-5E code CODE >113:H:\Post21\happy\light-control-system\main.s
-60 code CODE >114:H:\Post21\happy\light-control-system\main.s
-62 code CODE >115:H:\Post21\happy\light-control-system\main.s
-64 code CODE >116:H:\Post21\happy\light-control-system\main.s
-66 code CODE >117:H:\Post21\happy\light-control-system\main.s
-6A code CODE >118:H:\Post21\happy\light-control-system\main.s
-6C code CODE >119:H:\Post21\happy\light-control-system\main.s
-70 code CODE >121:H:\Post21\happy\light-control-system\main.s
-72 code CODE >124:H:\Post21\happy\light-control-system\main.s
-76 code CODE >125:H:\Post21\happy\light-control-system\main.s
-78 code CODE >126:H:\Post21\happy\light-control-system\main.s
-7A code CODE >127:H:\Post21\happy\light-control-system\main.s
-7E code CODE >131:H:\Post21\happy\light-control-system\main.s
-82 code CODE >132:H:\Post21\happy\light-control-system\main.s
-86 code CODE >134:H:\Post21\happy\light-control-system\main.s
-88 code CODE >135:H:\Post21\happy\light-control-system\main.s
-8C code CODE >136:H:\Post21\happy\light-control-system\main.s
-8E code CODE >137:H:\Post21\happy\light-control-system\main.s
-90 code CODE >139:H:\Post21\happy\light-control-system\main.s
-92 code CODE >147:H:\Post21\happy\light-control-system\main.s
-94 code CODE >148:H:\Post21\happy\light-control-system\main.s
-96 code CODE >150:H:\Post21\happy\light-control-system\main.s
-98 code CODE >151:H:\Post21\happy\light-control-system\main.s
-9A code CODE >155:H:\Post21\happy\light-control-system\main.s
-9E code CODE >156:H:\Post21\happy\light-control-system\main.s
-A2 code CODE >164:H:\Post21\happy\light-control-system\main.s
-A4 code CODE >165:H:\Post21\happy\light-control-system\main.s
-A6 code CODE >167:H:\Post21\happy\light-control-system\main.s
-A8 code CODE >168:H:\Post21\happy\light-control-system\main.s
-AA code CODE >175:H:\Post21\happy\light-control-system\main.s
-AC code CODE >180:H:\Post21\happy\light-control-system\main.s
-B0 code CODE >182:H:\Post21\happy\light-control-system\main.s
-B2 code CODE >183:H:\Post21\happy\light-control-system\main.s
-B4 code CODE >184:H:\Post21\happy\light-control-system\main.s
-B6 code CODE >185:H:\Post21\happy\light-control-system\main.s
-B8 code CODE >186:H:\Post21\happy\light-control-system\main.s
-BA code CODE >187:H:\Post21\happy\light-control-system\main.s
-BC code CODE >191:H:\Post21\happy\light-control-system\main.s
-C0 code CODE >192:H:\Post21\happy\light-control-system\main.s
-C4 code CODE >193:H:\Post21\happy\light-control-system\main.s
-C8 code CODE >195:H:\Post21\happy\light-control-system\main.s
-CC code CODE >196:H:\Post21\happy\light-control-system\main.s
-D0 code CODE >198:H:\Post21\happy\light-control-system\main.s
-D4 code CODE >200:H:\Post21\happy\light-control-system\main.s
-D6 code CODE >201:H:\Post21\happy\light-control-system\main.s
-D8 code CODE >202:H:\Post21\happy\light-control-system\main.s
-DC code CODE >207:H:\Post21\happy\light-control-system\main.s
-DE code CODE >211:H:\Post21\happy\light-control-system\main.s
-E0 code CODE >212:H:\Post21\happy\light-control-system\main.s
-E2 code CODE >213:H:\Post21\happy\light-control-system\main.s
-E4 code CODE >214:H:\Post21\happy\light-control-system\main.s
-E6 code CODE >215:H:\Post21\happy\light-control-system\main.s
-E8 code CODE >217:H:\Post21\happy\light-control-system\main.s
-EA code CODE >218:H:\Post21\happy\light-control-system\main.s
-EC code CODE >222:H:\Post21\happy\light-control-system\main.s
-F0 code CODE >224:H:\Post21\happy\light-control-system\main.s
-F2 code CODE >226:H:\Post21\happy\light-control-system\main.s
-F4 code CODE >227:H:\Post21\happy\light-control-system\main.s
+0 code CODE >60:H:\Post21\happy\light-control-system\main.s
+0 code CODE >61:H:\Post21\happy\light-control-system\main.s
+4 code CODE >63:H:\Post21\happy\light-control-system\main.s
+8 code CODE >64:H:\Post21\happy\light-control-system\main.s
+C code CODE >67:H:\Post21\happy\light-control-system\main.s
+E code CODE >68:H:\Post21\happy\light-control-system\main.s
+10 code CODE >69:H:\Post21\happy\light-control-system\main.s
+14 code CODE >70:H:\Post21\happy\light-control-system\main.s
+18 code CODE >71:H:\Post21\happy\light-control-system\main.s
+1C code CODE >72:H:\Post21\happy\light-control-system\main.s
+20 code CODE >73:H:\Post21\happy\light-control-system\main.s
+22 code CODE >74:H:\Post21\happy\light-control-system\main.s
+24 code CODE >75:H:\Post21\happy\light-control-system\main.s
+26 code CODE >76:H:\Post21\happy\light-control-system\main.s
+28 code CODE >77:H:\Post21\happy\light-control-system\main.s
+2A code CODE >78:H:\Post21\happy\light-control-system\main.s
+2C code CODE >81:H:\Post21\happy\light-control-system\main.s
+2E code CODE >82:H:\Post21\happy\light-control-system\main.s
+30 code CODE >83:H:\Post21\happy\light-control-system\main.s
+32 code CODE >84:H:\Post21\happy\light-control-system\main.s
+34 code CODE >85:H:\Post21\happy\light-control-system\main.s
+36 code CODE >86:H:\Post21\happy\light-control-system\main.s
+38 code CODE >90:H:\Post21\happy\light-control-system\main.s
+3C code CODE >94:H:\Post21\happy\light-control-system\main.s
+3E code CODE >97:H:\Post21\happy\light-control-system\main.s
+40 code CODE >98:H:\Post21\happy\light-control-system\main.s
+42 code CODE >99:H:\Post21\happy\light-control-system\main.s
+44 code CODE >100:H:\Post21\happy\light-control-system\main.s
+46 code CODE >102:H:\Post21\happy\light-control-system\main.s
+48 code CODE >106:H:\Post21\happy\light-control-system\main.s
+4C code CODE >107:H:\Post21\happy\light-control-system\main.s
+4E code CODE >108:H:\Post21\happy\light-control-system\main.s
+50 code CODE >109:H:\Post21\happy\light-control-system\main.s
+52 code CODE >110:H:\Post21\happy\light-control-system\main.s
+54 code CODE >115:H:\Post21\happy\light-control-system\main.s
+56 code CODE >116:H:\Post21\happy\light-control-system\main.s
+58 code CODE >117:H:\Post21\happy\light-control-system\main.s
+5A code CODE >120:H:\Post21\happy\light-control-system\main.s
+5E code CODE >121:H:\Post21\happy\light-control-system\main.s
+60 code CODE >122:H:\Post21\happy\light-control-system\main.s
+62 code CODE >123:H:\Post21\happy\light-control-system\main.s
+64 code CODE >124:H:\Post21\happy\light-control-system\main.s
+66 code CODE >125:H:\Post21\happy\light-control-system\main.s
+6A code CODE >126:H:\Post21\happy\light-control-system\main.s
+6C code CODE >127:H:\Post21\happy\light-control-system\main.s
+70 code CODE >129:H:\Post21\happy\light-control-system\main.s
+72 code CODE >132:H:\Post21\happy\light-control-system\main.s
+74 code CODE >133:H:\Post21\happy\light-control-system\main.s
+76 code CODE >134:H:\Post21\happy\light-control-system\main.s
+78 code CODE >135:H:\Post21\happy\light-control-system\main.s
+7A code CODE >136:H:\Post21\happy\light-control-system\main.s
+7C code CODE >137:H:\Post21\happy\light-control-system\main.s
+7E code CODE >138:H:\Post21\happy\light-control-system\main.s
+80 code CODE >141:H:\Post21\happy\light-control-system\main.s
+84 code CODE >142:H:\Post21\happy\light-control-system\main.s
+86 code CODE >143:H:\Post21\happy\light-control-system\main.s
+88 code CODE >144:H:\Post21\happy\light-control-system\main.s
+8C code CODE >159:H:\Post21\happy\light-control-system\main.s
+8E code CODE >163:H:\Post21\happy\light-control-system\main.s
+92 code CODE >164:H:\Post21\happy\light-control-system\main.s
+96 code CODE >166:H:\Post21\happy\light-control-system\main.s
+98 code CODE >167:H:\Post21\happy\light-control-system\main.s
+9A code CODE >169:H:\Post21\happy\light-control-system\main.s
+9C code CODE >170:H:\Post21\happy\light-control-system\main.s
+9E code CODE >184:H:\Post21\happy\light-control-system\main.s
+A2 code CODE >185:H:\Post21\happy\light-control-system\main.s
+A6 code CODE >193:H:\Post21\happy\light-control-system\main.s
+AA code CODE >195:H:\Post21\happy\light-control-system\main.s
+AC code CODE >196:H:\Post21\happy\light-control-system\main.s
+AE code CODE >197:H:\Post21\happy\light-control-system\main.s
+B0 code CODE >199:H:\Post21\happy\light-control-system\main.s
+B2 code CODE >200:H:\Post21\happy\light-control-system\main.s
+B4 code CODE >201:H:\Post21\happy\light-control-system\main.s
+B6 code CODE >203:H:\Post21\happy\light-control-system\main.s
+B8 code CODE >204:H:\Post21\happy\light-control-system\main.s
+BA code CODE >205:H:\Post21\happy\light-control-system\main.s
+BC code CODE >207:H:\Post21\happy\light-control-system\main.s
+BE code CODE >208:H:\Post21\happy\light-control-system\main.s
+C0 code CODE >209:H:\Post21\happy\light-control-system\main.s
+C2 code CODE >212:H:\Post21\happy\light-control-system\main.s
+C6 code CODE >213:H:\Post21\happy\light-control-system\main.s
+CA code CODE >214:H:\Post21\happy\light-control-system\main.s
+CE code CODE >215:H:\Post21\happy\light-control-system\main.s
+D2 code CODE >216:H:\Post21\happy\light-control-system\main.s
+D6 code CODE >217:H:\Post21\happy\light-control-system\main.s
+D8 code CODE >220:H:\Post21\happy\light-control-system\main.s
+DC code CODE >221:H:\Post21\happy\light-control-system\main.s
+E0 code CODE >222:H:\Post21\happy\light-control-system\main.s
+E4 code CODE >223:H:\Post21\happy\light-control-system\main.s
+E8 code CODE >224:H:\Post21\happy\light-control-system\main.s
+EA code CODE >226:H:\Post21\happy\light-control-system\main.s
+EE code CODE >227:H:\Post21\happy\light-control-system\main.s
+F2 code CODE >228:H:\Post21\happy\light-control-system\main.s
 F6 code CODE >229:H:\Post21\happy\light-control-system\main.s
-FA code CODE >234:H:\Post21\happy\light-control-system\main.s
-FC code CODE >235:H:\Post21\happy\light-control-system\main.s
-FE code CODE >236:H:\Post21\happy\light-control-system\main.s
-100 code CODE >237:H:\Post21\happy\light-control-system\main.s
-102 code CODE >242:H:\Post21\happy\light-control-system\main.s
-104 code CODE >243:H:\Post21\happy\light-control-system\main.s
-106 code CODE >245:H:\Post21\happy\light-control-system\main.s
-108 code CODE >247:H:\Post21\happy\light-control-system\main.s
-10A code CODE >248:H:\Post21\happy\light-control-system\main.s
-10C code CODE >252:H:\Post21\happy\light-control-system\main.s
-10E code CODE >253:H:\Post21\happy\light-control-system\main.s
-110 code CODE >257:H:\Post21\happy\light-control-system\main.s
-112 code CODE >258:H:\Post21\happy\light-control-system\main.s
-114 code CODE >259:H:\Post21\happy\light-control-system\main.s
-116 code CODE >261:H:\Post21\happy\light-control-system\main.s
-118 code CODE >262:H:\Post21\happy\light-control-system\main.s
-11A code CODE >264:H:\Post21\happy\light-control-system\main.s
-11C code CODE >265:H:\Post21\happy\light-control-system\main.s
-11E code CODE >266:H:\Post21\happy\light-control-system\main.s
-120 code CODE >267:H:\Post21\happy\light-control-system\main.s
-122 code CODE >268:H:\Post21\happy\light-control-system\main.s
-124 code CODE >274:H:\Post21\happy\light-control-system\main.s
-128 code CODE >275:H:\Post21\happy\light-control-system\main.s
+F8 code CODE >231:H:\Post21\happy\light-control-system\main.s
+FC code CODE >232:H:\Post21\happy\light-control-system\main.s
+100 code CODE >233:H:\Post21\happy\light-control-system\main.s
+102 code CODE >241:H:\Post21\happy\light-control-system\main.s
+104 code CODE >242:H:\Post21\happy\light-control-system\main.s
+106 code CODE >243:H:\Post21\happy\light-control-system\main.s
+108 code CODE >244:H:\Post21\happy\light-control-system\main.s
+10A code CODE >247:H:\Post21\happy\light-control-system\main.s
+10C code CODE >248:H:\Post21\happy\light-control-system\main.s
+10E code CODE >249:H:\Post21\happy\light-control-system\main.s
+112 code CODE >254:H:\Post21\happy\light-control-system\main.s
+116 code CODE >258:H:\Post21\happy\light-control-system\main.s
+11A code CODE >259:H:\Post21\happy\light-control-system\main.s
+11E code CODE >260:H:\Post21\happy\light-control-system\main.s
+120 code CODE >268:H:\Post21\happy\light-control-system\main.s
+122 code CODE >269:H:\Post21\happy\light-control-system\main.s
+124 code CODE >270:H:\Post21\happy\light-control-system\main.s
+126 code CODE >271:H:\Post21\happy\light-control-system\main.s
+128 code CODE >274:H:\Post21\happy\light-control-system\main.s
+12A code CODE >275:H:\Post21\happy\light-control-system\main.s
 12C code CODE >276:H:\Post21\happy\light-control-system\main.s
-130 code CODE >277:H:\Post21\happy\light-control-system\main.s
-134 code CODE >280:H:\Post21\happy\light-control-system\main.s
-136 code CODE >281:H:\Post21\happy\light-control-system\main.s
+130 code CODE >278:H:\Post21\happy\light-control-system\main.s
+134 code CODE >282:H:\Post21\happy\light-control-system\main.s
 138 code CODE >283:H:\Post21\happy\light-control-system\main.s
-13A code CODE >284:H:\Post21\happy\light-control-system\main.s
-13C code CODE >286:H:\Post21\happy\light-control-system\main.s
-13E code CODE >287:H:\Post21\happy\light-control-system\main.s
-140 code CODE >288:H:\Post21\happy\light-control-system\main.s
-144 code CODE >290:H:\Post21\happy\light-control-system\main.s
-146 code CODE >291:H:\Post21\happy\light-control-system\main.s
-148 code CODE >292:H:\Post21\happy\light-control-system\main.s
-14A code CODE >293:H:\Post21\happy\light-control-system\main.s
-14C code CODE >294:H:\Post21\happy\light-control-system\main.s
-14E code CODE >297:H:\Post21\happy\light-control-system\main.s
-150 code CODE >301:H:\Post21\happy\light-control-system\main.s
-152 code CODE >302:H:\Post21\happy\light-control-system\main.s
-154 code CODE >303:H:\Post21\happy\light-control-system\main.s
-156 code CODE >304:H:\Post21\happy\light-control-system\main.s
-158 code CODE >306:H:\Post21\happy\light-control-system\main.s
+13C code CODE >284:H:\Post21\happy\light-control-system\main.s
+13E code CODE >290:H:\Post21\happy\light-control-system\main.s
+140 code CODE >291:H:\Post21\happy\light-control-system\main.s
+142 code CODE >292:H:\Post21\happy\light-control-system\main.s
+146 code CODE >293:H:\Post21\happy\light-control-system\main.s
+148 code CODE >297:H:\Post21\happy\light-control-system\main.s
+14C code CODE >298:H:\Post21\happy\light-control-system\main.s
+14E code CODE >302:H:\Post21\happy\light-control-system\main.s
+150 code CODE >303:H:\Post21\happy\light-control-system\main.s
+152 code CODE >307:H:\Post21\happy\light-control-system\main.s
+154 code CODE >308:H:\Post21\happy\light-control-system\main.s
+156 code CODE >309:H:\Post21\happy\light-control-system\main.s
+158 code CODE >311:H:\Post21\happy\light-control-system\main.s
+15A code CODE >312:H:\Post21\happy\light-control-system\main.s
+15C code CODE >313:H:\Post21\happy\light-control-system\main.s
+15E code CODE >314:H:\Post21\happy\light-control-system\main.s
+160 code CODE >315:H:\Post21\happy\light-control-system\main.s
+162 code CODE >325:H:\Post21\happy\light-control-system\main.s
+164 code CODE >326:H:\Post21\happy\light-control-system\main.s
+166 code CODE >328:H:\Post21\happy\light-control-system\main.s
+168 code CODE >329:H:\Post21\happy\light-control-system\main.s
+16A code CODE >344:H:\Post21\happy\light-control-system\main.s
+16C code CODE >349:H:\Post21\happy\light-control-system\main.s
+170 code CODE >351:H:\Post21\happy\light-control-system\main.s
+172 code CODE >352:H:\Post21\happy\light-control-system\main.s
+174 code CODE >353:H:\Post21\happy\light-control-system\main.s
+176 code CODE >354:H:\Post21\happy\light-control-system\main.s
+178 code CODE >355:H:\Post21\happy\light-control-system\main.s
+17A code CODE >356:H:\Post21\happy\light-control-system\main.s
+17C code CODE >360:H:\Post21\happy\light-control-system\main.s
+180 code CODE >361:H:\Post21\happy\light-control-system\main.s
+184 code CODE >362:H:\Post21\happy\light-control-system\main.s
+188 code CODE >364:H:\Post21\happy\light-control-system\main.s
+18C code CODE >365:H:\Post21\happy\light-control-system\main.s
+190 code CODE >367:H:\Post21\happy\light-control-system\main.s
+194 code CODE >369:H:\Post21\happy\light-control-system\main.s
+196 code CODE >370:H:\Post21\happy\light-control-system\main.s
+198 code CODE >371:H:\Post21\happy\light-control-system\main.s
+19C code CODE >376:H:\Post21\happy\light-control-system\main.s
+19E code CODE >380:H:\Post21\happy\light-control-system\main.s
+1A0 code CODE >381:H:\Post21\happy\light-control-system\main.s
+1A2 code CODE >382:H:\Post21\happy\light-control-system\main.s
+1A4 code CODE >383:H:\Post21\happy\light-control-system\main.s
+1A6 code CODE >384:H:\Post21\happy\light-control-system\main.s
+1A8 code CODE >386:H:\Post21\happy\light-control-system\main.s
+1AA code CODE >387:H:\Post21\happy\light-control-system\main.s
+1AC code CODE >391:H:\Post21\happy\light-control-system\main.s
+1B0 code CODE >393:H:\Post21\happy\light-control-system\main.s
+1B2 code CODE >395:H:\Post21\happy\light-control-system\main.s
+1B4 code CODE >396:H:\Post21\happy\light-control-system\main.s
+1B6 code CODE >398:H:\Post21\happy\light-control-system\main.s
+1BA code CODE >403:H:\Post21\happy\light-control-system\main.s
+1BC code CODE >404:H:\Post21\happy\light-control-system\main.s
+1BE code CODE >405:H:\Post21\happy\light-control-system\main.s
+1C0 code CODE >406:H:\Post21\happy\light-control-system\main.s
+1C2 code CODE >411:H:\Post21\happy\light-control-system\main.s
+1C4 code CODE >412:H:\Post21\happy\light-control-system\main.s
+1C6 code CODE >414:H:\Post21\happy\light-control-system\main.s
+1C8 code CODE >416:H:\Post21\happy\light-control-system\main.s
+1CA code CODE >417:H:\Post21\happy\light-control-system\main.s
+1CC code CODE >421:H:\Post21\happy\light-control-system\main.s
+1CE code CODE >422:H:\Post21\happy\light-control-system\main.s
+1D0 code CODE >426:H:\Post21\happy\light-control-system\main.s
+1D2 code CODE >427:H:\Post21\happy\light-control-system\main.s
+1D4 code CODE >428:H:\Post21\happy\light-control-system\main.s
+1D6 code CODE >430:H:\Post21\happy\light-control-system\main.s
+1D8 code CODE >431:H:\Post21\happy\light-control-system\main.s
+1DA code CODE >433:H:\Post21\happy\light-control-system\main.s
+1DC code CODE >434:H:\Post21\happy\light-control-system\main.s
+1DE code CODE >435:H:\Post21\happy\light-control-system\main.s
+1E0 code CODE >436:H:\Post21\happy\light-control-system\main.s
+1E2 code CODE >437:H:\Post21\happy\light-control-system\main.s
+1E4 code CODE >443:H:\Post21\happy\light-control-system\main.s
+1E8 code CODE >444:H:\Post21\happy\light-control-system\main.s
+1EC code CODE >445:H:\Post21\happy\light-control-system\main.s
+1F0 code CODE >446:H:\Post21\happy\light-control-system\main.s
+1F4 code CODE >449:H:\Post21\happy\light-control-system\main.s
+1F6 code CODE >450:H:\Post21\happy\light-control-system\main.s
+1F8 code CODE >452:H:\Post21\happy\light-control-system\main.s
+1FA code CODE >453:H:\Post21\happy\light-control-system\main.s
+1FC code CODE >455:H:\Post21\happy\light-control-system\main.s
+1FE code CODE >456:H:\Post21\happy\light-control-system\main.s
+200 code CODE >457:H:\Post21\happy\light-control-system\main.s
+204 code CODE >459:H:\Post21\happy\light-control-system\main.s
+206 code CODE >460:H:\Post21\happy\light-control-system\main.s
+208 code CODE >461:H:\Post21\happy\light-control-system\main.s
+20A code CODE >462:H:\Post21\happy\light-control-system\main.s
+20C code CODE >463:H:\Post21\happy\light-control-system\main.s
+20E code CODE >466:H:\Post21\happy\light-control-system\main.s
+210 code CODE >470:H:\Post21\happy\light-control-system\main.s
+212 code CODE >471:H:\Post21\happy\light-control-system\main.s
+214 code CODE >472:H:\Post21\happy\light-control-system\main.s
+216 code CODE >473:H:\Post21\happy\light-control-system\main.s
+218 code CODE >475:H:\Post21\happy\light-control-system\main.s
 $build/default/debug/keypad.o
 1FE04 keypad_code CODE >24:H:\Post21\happy\light-control-system\keypad.s
 1FE06 keypad_code CODE >25:H:\Post21\happy\light-control-system\keypad.s
@@ -578,7 +650,7 @@ $build/default/debug/keypad.o
 %SYMTAB
 __Ladc_code 0 0 ABS 0 adc_code -
 __Hspace_0 20000 0 ABS 0 - -
-__Hspace_1 2E 0 ABS 0 - -
+__Hspace_1 34 0 ABS 0 - -
 __Hspace_3 0 0 ABS 0 - -
 __Hspace_4 60000E 0 ABS 0 - -
 __Hudata_bank0 0 0 ABS 0 udata_bank0 -
@@ -592,16 +664,20 @@ __Hudata_bank7 0 0 ABS 0 udata_bank7 -
 __Hudata_bank8 0 0 ABS 0 udata_bank8 -
 __Hudata_bank9 0 0 ABS 0 udata_bank9 -
 __Hlcd_code 0 0 ABS 0 lcd_code -
-Q1_HI 14 0 COMRAM 1 udata_acs build/default/debug/operations.o
-Q1_LO 12 0 COMRAM 1 udata_acs build/default/debug/operations.o
-Q2_HI 13 0 COMRAM 1 udata_acs build/default/debug/operations.o
-Q2_LO 11 0 COMRAM 1 udata_acs build/default/debug/operations.o
+ARG1H 1B 0 COMRAM 1 udata_acs build/default/debug/operations.o
+ARG1L 1C 0 COMRAM 1 udata_acs build/default/debug/operations.o
+ARG2H 1D 0 COMRAM 1 udata_acs build/default/debug/operations.o
+ARG2L 1E 0 COMRAM 1 udata_acs build/default/debug/operations.o
+Q1_HI 1A 0 COMRAM 1 udata_acs build/default/debug/operations.o
+Q1_LO 18 0 COMRAM 1 udata_acs build/default/debug/operations.o
+Q2_HI 19 0 COMRAM 1 udata_acs build/default/debug/operations.o
+Q2_LO 17 0 COMRAM 1 udata_acs build/default/debug/operations.o
 __Hdac_code 0 0 ABS 0 dac_code -
 __Hkeypad_code 0 0 ABS 0 keypad_code -
-__Ludata_acs_ovr 2D 0 COMRAM 1 udata_acs_ovr -
+__Ludata_acs_ovr 33 0 COMRAM 1 udata_acs_ovr -
 LCD_Write_Hex 1FF38 0 CODE 0 lcd_code build/default/debug/LCD.o
 __Hadc_code 0 0 ABS 0 adc_code -
-__Hudata_acs_ovr 2E 0 COMRAM 1 udata_acs_ovr -
+__Hudata_acs_ovr 34 0 COMRAM 1 udata_acs_ovr -
 __Hoperations_code 0 0 ABS 0 operations_code -
 __Huart_code 0 0 ABS 0 uart_code -
 Keypad_A_Decode 1FE32 0 CODE 0 keypad_code build/default/debug/keypad.o
@@ -627,10 +703,14 @@ __Hcode 0 0 ABS 0 code -
 __Hdata 0 0 ABS 0 data -
 __Lcode 0 0 ABS 0 code -
 __Ldata 0 0 ABS 0 data -
-ADCchange_HI 2A 0 COMRAM 1 udata_acs build/default/debug/DAC_Interrupt.o
-ADCchange_LO 2B 0 COMRAM 1 udata_acs build/default/debug/DAC_Interrupt.o
+ADCchange_HI 30 0 COMRAM 1 udata_acs build/default/debug/DAC_Interrupt.o
+ADCchange_LO 31 0 COMRAM 1 udata_acs build/default/debug/DAC_Interrupt.o
+RES0 1F 0 COMRAM 1 udata_acs build/default/debug/operations.o
+RES1 20 0 COMRAM 1 udata_acs build/default/debug/operations.o
+RES2 21 0 COMRAM 1 udata_acs build/default/debug/operations.o
+RES3 22 0 COMRAM 1 udata_acs build/default/debug/operations.o
 __S0 20000 0 ABS 0 - -
-__S1 2E 0 ABS 0 - -
+__S1 34 0 ABS 0 - -
 __S3 0 0 ABS 0 - -
 twobyte_negative 1FDA6 0 CODE 0 operations_code build/default/debug/operations.o
 __Ludata_bank10 0 0 ABS 0 udata_bank10 -
@@ -641,13 +721,14 @@ __Ludata_bank14 0 0 ABS 0 udata_bank14 -
 __Ludata_bank15 0 0 ABS 0 udata_bank15 -
 ADC_Interrupt_Service 1FD46 0 CODE 0 dac_code build/default/debug/DAC_Interrupt.o
 ADC_Read 1FD16 0 CODE 0 adc_code build/default/debug/ACD.o
+sixteen_multiply 1FDC4 0 CODE 0 operations_code build/default/debug/operations.o
 __Lconfig 0 0 CONFIG 4 config -
 UART_Transmit_Message 1FD30 0 CODE 0 uart_code build/default/debug/UART.o
 Keypad_Setup 1FE04 0 CODE 0 keypad_code build/default/debug/keypad.o
 LCD_Write_Message 1FF56 0 CODE 0 lcd_code build/default/debug/LCD.o
 isa$std 1 0 ABS 0 - build/default/debug/LCD.o
-invert_HI F 0 COMRAM 1 udata_acs build/default/debug/operations.o
-invert_LO 10 0 COMRAM 1 udata_acs build/default/debug/operations.o
+invert_HI 15 0 COMRAM 1 udata_acs build/default/debug/operations.o
+invert_LO 16 0 COMRAM 1 udata_acs build/default/debug/operations.o
 LCD_Clear 1FFF2 0 CODE 0 lcd_code build/default/debug/LCD.o
 LCD_Setup 1FEE2 0 CODE 0 lcd_code build/default/debug/LCD.o
 __Lspace_0 0 0 ABS 0 - -
@@ -701,7 +782,7 @@ adc_code 0 1FD00 1FD00 1E 1
 uart_code 0 1FD1E 1FD1E 28 1
 operations_code 0 1FD9A 1FD9A 6A 1
 data 0 1FCF2 1FCF2 E 1
-udata_acs 1 0 0 2E 1
+udata_acs 1 0 0 34 1
 keypad_code 0 1FE04 1FE04 DE 1
 lcd_code 0 1FEE2 1FEE2 11E 1
 dac_code 0 1FD46 1FD46 54 1
