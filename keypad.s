@@ -2,7 +2,7 @@
 
 
 global Keypad_Setup, Keypad_A_Decode, Keypad_Num_Decode
-
+extrn	LCD_Write_Message
 
 psect udata_acs ; named variables in access ram
 LCD_cnt_l: ds 1 ; reserve 1 byte for variable LCD_cnt_l
@@ -13,6 +13,9 @@ LCD_counter: ds 1 ; reserve 1 byte for counting through nessage
 Row_bits: ds 1 ; store row bits (lower nibble needed)
 Col_bits: ds 1 ; '' column '' (upper nibble ,,)
 All_bits: ds 1
+    
+my_num: ds 1    
+    
 LCD_E EQU 5 ; LCD enable bit
 LCD_RS EQU 4 ; LCD register select bit
 
@@ -142,39 +145,95 @@ outputNull:
     movlw 0xFF
     return
 
+output0:
+    movlw	'0'
+    movwf	my_num, A 
+    lfsr	2, my_num
+    movlw	0x1
+    call	LCD_Write_Message
+    movlw	0x0
+    return    
+    
+    
 output1:
+    movlw	'1'
+    movwf	my_num, A 
+    lfsr	2, my_num
+    movlw	0x1
+    call	LCD_Write_Message
     movlw 0x1
     return
 
 output2:
+    movlw	'2'
+    movwf	my_num, A 
+    lfsr	2, my_num
+    movlw	0x1
+    call	LCD_Write_Message
     movlw 0x2
     return
 
 output3:
+    movlw	'3'
+    movwf	my_num, A 
+    lfsr	2, my_num
+    movlw	0x1
+    call	LCD_Write_Message
     movlw 0x3
     return
 
 output4:
+    movlw	'4'
+    movwf	my_num, A 
+    lfsr	2, my_num
+    movlw	0x1
+    call	LCD_Write_Message    
     movlw 0x4
     return
 
 output5:
+    movlw	'5'
+    movwf	my_num, A 
+    lfsr	2, my_num
+    movlw	0x1
+    call	LCD_Write_Message
     movlw 0x5
     return
 
 output6:
+    movlw	'6'
+    movwf	my_num, A 
+    lfsr	2, my_num
+    movlw	0x1
+    call	LCD_Write_Message    
     movlw 0x6
     return
 
 output7:
+    movlw	'7'
+    movwf	my_num, A 
+    lfsr	2, my_num
+    movlw	0x1
+    call	LCD_Write_Message
+
     movlw 0x7
     return
 
 output8:
+    movlw	'8'
+    movwf	my_num, A 
+    lfsr	2, my_num
+    movlw	0x1
+    call	LCD_Write_Message    
     movlw 0x8
     return
 
 output9:
+    movlw	'9'
+    movwf	my_num, A 
+    lfsr	2, my_num
+    movlw	0x1
+    call	LCD_Write_Message    
     movlw 0x9
     return
 

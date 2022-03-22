@@ -11080,7 +11080,23 @@ inputDigitsLoop:
  incf counter, A ; increment the counter
  movf counter, W, A
  movf decoded_value, 0, 0 ; move decoded val to W to write it
- call LCD_Write_Hex ; write to LCD
+
+ ; CONVERT THE NUMERICAL DIGIT ((RCON) and 0FFh), 3, a ASCII
+
+
+
+; movf decoded_value, 0, 0
+; addlw 0x30
+; movwf FSR2, A
+; movlw 0x1
+; call LCD_Write_Message
+
+ ;call LCD_Write_Hex ; write to LCD
+
+
+
+
+
  movlw 0xFFFF
  call LCD_delay_ms
 
@@ -11206,9 +11222,6 @@ thousands:
  movwf ARG2H, A
  movff POSTINC0, ARG2L, A
 
-
-
-
  call sixteen_multiply
 
  ; get a sixteen bit result and store it in hi and lo
@@ -11280,11 +11293,11 @@ feedbackloop:
 
  ; if any digit in amount to change is non-zero, branch to changing LEDs
 
- movf ADCchange_LO, W, A
- bnz changeLEDs
+ movf ADCchange_LO, W, A ; ((RCON) and 0FFh), 3, a UNCOMMENT
+ bnz changeLEDs ; ((RCON) and 0FFh), 3, a UNCOMMENT
 
- movf ADCchange_HI, W, A
- bnz changeLEDs
+ movf ADCchange_HI, W, A ; ((RCON) and 0FFh), 3, a UNCOMMENT
+ bnz changeLEDs ; ((RCON) and 0FFh), 3, a UNCOMMENT
 
 keypadCheck:
  ; is A pressed on keyboard?
@@ -11328,7 +11341,7 @@ changeLEDs:
  bz gobackto_feedback
  call rotate_right
 
-
+ movlw 1 ; to remove
 
 
  return
@@ -11343,7 +11356,7 @@ rotate_right: ;off
 
  bz gobackto_feedback
  bra rotate_right
-
+ movlw 1 ; to remove
 
 numIsPositive:
  call find_num_LEDS
@@ -11354,7 +11367,7 @@ numIsPositive:
  bz gobackto_feedback
 
  call rotate_left
-
+ movlw 1 ; to remove
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 specialCase: ;IF PORTC IS 0, THEN SIMPLY ADD 1. THEN THE ROTATE THING SHOULD WORK
@@ -11362,7 +11375,7 @@ specialCase: ;IF PORTC IS 0, THEN SIMPLY ADD 1. THEN THE ROTATE THING SHOULD WOR
  movwf PORTC, A
  decf num_LEDS_to_change, A
  bra continue_Rotate
-
+ movlw 1 ; to remove
 rotate_left: ; on
 
  ; IF PORT C IS FF, THEN DONT DO THIS
@@ -11393,6 +11406,8 @@ rotate_Loop:
  movf num_LEDS_to_change, W, A ; ((RCON) and 0FFh), 3, a REMOVE?
  bz gobackto_feedback ; finished changing LEDs
  bra rotate_Loop
+
+ movlw 1 ; to remove
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -11423,6 +11438,8 @@ loop:
 
  return
 
+ movlw 1 ; to remove
+
 gobackto_feedback:
  ; reset the ADC change (needed if LEDs were serviced)
  movlw 0
@@ -11431,5 +11448,5 @@ gobackto_feedback:
  movwf ADCchange_HI, A
 
  goto keypadCheck
-
+ movlw 1 ; to remove
 end rst
