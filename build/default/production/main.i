@@ -10956,8 +10956,9 @@ stk_offset SET 0
 auto_size SET 0
 ENDM
 # 5 "C:\\Program Files\\Microchip\\xc8\\v2.32\\pic\\include\\xc.inc" 2 3
-# 1 "main.s" 2
+# 2 "main.s" 2
 
+global targ_HI, targ_LO
 
 extrn UART_Setup, UART_Transmit_Message ; external uart subroutines
 extrn LCD_Setup, LCD_Write_Message, LCD_Write_Hex, LCD_Clear, LCD_delay_ms ; external LCD subroutines
@@ -10965,33 +10966,34 @@ extrn ADC_Setup, ADC_Read ; external ADC subroutines
 extrn ADC_Interrupt_Service, Enable_Interrupt
 extrn Keypad_Setup, Keypad_Num_Decode, Keypad_A_Decode
 
-;extrn sixteen_SUB, twobyte_negative
-;extrn invert_HI, invert_LO
 
-global Q2_LO, Q1_LO, Q2_HI, Q1_HI
+extrn sixteen_sub, twobyte_negative
+extrn Q2_LO, Q1_LO, Q2_HI, Q1_HI, invert_HI, invert_LO
+
+extrn ADCchange_HI, ADCchange_LO
+
 
 psect udata_acs ; reserve data space in access ram
 
 decoded_value: ds 1
+test: ds 1
 temp: ds 1
 temp_HI: ds 1
 temp_LO: ds 1
-Q2_LO: ds 1
-Q1_LO: ds 1
-Q2_HI: ds 1
-Q1_HI: ds 1
 counter: ds 1
 
-ARG1H: ds 1
-ARG1L: ds 1
-ARG2H: ds 1
-ARG2L: ds 1
-RES0: ds 1
-RES1: ds 1
-RES2: ds 1
-RES3: ds 1
 
-first_loc: ds 1 ; this MUST be the last memory location to be defined
+targ_HI: ds 1
+targ_LO: ds 1
+
+one_LED_HI: ds 1
+one_LED_LO: ds 1
+
+num_LEDS_to_change: ds 1
+
+
+
+first_loc: ds 4 ; this MUST be the last memory location to be defined
 
 psect udata_bank4 ; reserve data anywhere in RAM (here at 0x400)
 ;myArray: ds 0x80 ; reserve 128 bytes for message data
@@ -11017,7 +11019,7 @@ setup: bcf ((EECON1) and 0FFh), 6, a ; point to Flash program memory
  call LCD_Setup
  call ADC_Setup ; setup ADC
  call Keypad_Setup
-; call Values_Loading
+ call Values_Loading
  movlw 0x00
  movwf TRISD, A
  movlw 0x00
@@ -11030,6 +11032,15 @@ setup: bcf ((EECON1) and 0FFh), 6, a ; point to Flash program memory
 
  return
 
+Values_Loading:
+ movlw 0x0A ; TODO: REPLACE WITH ACTUAL CALIBRATION
+ movwf one_LED_LO, A
+ movlw 0x00
+ movwf one_LED_HI, A
+
+ return
+
+
 inputDigitsLoop:
  call Keypad_Num_Decode
  movwf decoded_value, A
@@ -11038,7 +11049,6 @@ inputDigitsLoop:
  bz inputDigitsLoop ; if null, loop again
 
  ; if not zero, user made input
-
 
  ; if input D, finsihed entering, branch back
  movlw 0xD
@@ -11059,6 +11069,8 @@ inputDigitsLoop:
 
 targetInput:
  lfsr 0, first_loc ; set up inrecementation
+ movlw 0
+ movwf counter, A
  call inputDigitsLoop
 
 combineInput:
@@ -11073,44 +11085,10 @@ combineInput_loop:
 
  bra combineInput_loop
 
- ; ((RCON) and 0FFh), 3, a DO
  ; TODO: CONVERT ((RCON) and 0FFh), 3, a ADC
 
- movlw 0x09
- movwf Q2_LO, A
 
- movlw 0x05
- movwf Q2_HI, A
-
- movlw 0x0F
- movwf Q1_LO, A
-
- movlw 0x07
- movwf Q1_HI, A
-
- movff Q1_HI, PORTD
- movff Q1_LO, PORTJ
-
- ;call sixteen_SUB
-
-
- movlw 0000B ; ((RCON) and 0FFh), 3, a REMOVE
- movwf Q1_LO, A ; ((RCON) and 0FFh), 3, a REMOVE
-
-
- movff Q1_HI, PORTD ; temp/check
- movff Q1_LO, PORTJ ; temp/check
-
-
- ;call twobyte_negative
-
-
-; movff invert_HI, PORTD ; temp/check
-; movff invert_LO, PORTJ ; temp/check
-
-
-
- ; hardcoding in target for now
+ ; hardcoding in target for now TODO
 
 
  movlw 0x00
@@ -11123,64 +11101,136 @@ combineInput_loop:
  goto feedbackloop
 
 
+;;;;;;;;;;;;;;;;;;;;;;
 feedbackloop:
 
- ; check LED change flag
-     ;YES - call LED light change
- call changeLEDs
+ ; if any digit in amount to change is non-zero, branch to changing LEDs
+
+ movf ADCchange_LO, A
+ bnz changeLEDs
+
+ movf ADCchange_HI, A
+ bnz changeLEDs
+
+keypadCheck:
  ; is A pressed on keyboard?
      ; disbale interrupts, branch back to targetInput
-
  bra feedbackloop
 
+;;;;;;;;;;;;;;;;;;;;;;;;;
 
 changeLEDs:
- movlw 0x1
- movwf PORTC, A
+ movff ADCchange_HI, temp, A
+ rlcf temp, 0, 0
+
+ btfss STATUS, C, 0 ; if carry is 1, skip
+ bra numIsPositive
+
+ ; else num is negative
+
+ movff ADCchange_HI, Q1_HI, A
+ movff ADCchange_LO, Q1_LO, A
+ call twobyte_negative ; made number positive
+
+ movff invert_HI, ADCchange_HI, A
+ movff invert_LO, ADCchange_LO, A
+
+ call find_num_LEDS
+
+ movf num_LEDS_to_change, W, A ; if no change needed, branch back
+ bz keypadCheck
+ call rotate_right
+
+
+
 
  return
 
+rotate_right: ;off
 
-sixteen_multiply:
-    banksel ARG1L
-    MOVF ARG1L, W, A
-    MULWF ARG2L, A ; ARG1L * ARG2L->
-    ; PRODH:PRODL
-    MOVFF PRODH, RES1 ;
-    MOVFF PRODL, RES0 ;
-    ;
-    MOVF ARG1H, W, A
-    MULWF ARG2H, A ; ARG1H * ARG2H->
-    ; PRODH:PRODL
-    MOVFF PRODH, RES3 ;
-    MOVFF PRODL, RES2 ;
-    ;
-    MOVF ARG1L, W, A
-    MULWF ARG2H, A ; ARG1L * ARG2H->
-    ; PRODH:PRODL
-    MOVF PRODL, W, A ;
-    banksel RES1
-    ADDWF RES1, F, A ; Add cross
-    MOVF PRODH, W, A ; products
-    ADDWFC RES2, F, A ;
-    CLRF WREG, A ;
-    ADDWFC RES3, F, A ;
-    ;
-    MOVF ARG1H, W, A ;
-    MULWF ARG2L, A ; ARG1H * ARG2L->
-    ; PRODH:PRODL
-    MOVF PRODL, W, A ;
-    ADDWF RES1, F, A ; Add cross
-    MOVF PRODH, W, A ; products
-    ADDWFC RES2, F, A ;
-    CLRF WREG, A ;
-    ADDWFC RES3, F, A ;
-    banksel 0
-    return
+ rrcf PORTC, A
+ bcf STATUS, C, 0
+ decf num_LEDS_to_change, A
+ movf num_LEDS_to_change, W, A
 
-;movff first_loc,
-;call sixteen_multiply
-;
+ bz keypadCheck
+ bra rotate_right
+
+
+numIsPositive:
+ call find_num_LEDS
+
+ movff num_LEDS_to_change, PORTC, A ; if no change needed, branch back
+ bz keypadCheck
+
+ call rotate_left
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+specialCase: ;IF PORTC IS 0, THEN SIMPLY ADD 1. THEN THE ROTATE THING SHOULD WORK
+ movlw 1
+ movwf PORTC, A
+ decf num_LEDS_to_change, A
+ bra continue_Rotate
+
+rotate_left: ; on
+
+ ; IF PORT C IS FF, THEN DONT DO THIS
+ movlw 0xFF
+ subwf PORTC, 0, 0
+ ; TODO: output message saying max possible light?
+ bz keypadCheck
+
+ movf PORTC, W, A
+ bz specialCase
+
+
+continue_Rotate:
+ movf num_LEDS_to_change, W, A
+ bz keypadCheck ; finished changing LEDs
+
+
+rotate_Loop:
+ rlcf PORTC, A
+ bcf STATUS, C, 0 ; Clear carry (as rotating, and rotate moves carry into LSB)
+
+ movlw 1
+ addwf PORTC, A
+
+ decf num_LEDS_to_change, A
+
+ movf num_LEDS_to_change, W, A
+ bz keypadCheck ; finished changing LEDs
+ bra rotate_Loop
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+find_num_LEDS:
+
+ movff ADCchange_HI, Q1_HI
+ movff ADCchange_LO, Q1_LO
+ movff one_LED_HI, Q2_HI
+ movff one_LED_LO, Q2_LO
+
+
+ movlw 0xFF
+ movwf num_LEDS_to_change, A
+
+ movf ADCchange_HI, W, A ; to remove
+ movf ADCchange_LO, W, A ; to remove
+loop:
+ incf num_LEDS_to_change, A
+ movf num_LEDS_to_change, W, A ; to remove
+ call sixteen_sub
+
+ movf Q1_HI, W, A ; to remove
+ movf Q1_LO, W, A ; to remove
+ rlcf Q1_HI, 0, 0
+ btfss STATUS, C, 0
+ bra loop ; if number is positive
+ ; else num is negative
+
+ return
 
 
 
