@@ -1,6 +1,6 @@
 #include <xc.inc>
 	
-global	ADC_Interrupt_Service, Enable_Interrupt
+global	ADC_Interrupt_Service, Enable_Interrupt, Disable_Interrupt
 global	ADCchange_HI, ADCchange_LO
 
     
@@ -67,6 +67,10 @@ Enable_Interrupt:
 	bsf	TMR0IE		; Enable timer0 interrupt
 	bsf	GIE		; Enable all interrupts
 	return
-	
+
+Disable_Interrupt:
+	bcf	TMR0IE
+	bcf	GIE
+	return
 	end
 

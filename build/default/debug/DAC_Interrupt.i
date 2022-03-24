@@ -10958,7 +10958,7 @@ ENDM
 # 5 "C:\\Program Files\\Microchip\\xc8\\v2.32\\pic\\include\\xc.inc" 2 3
 # 2 "DAC_Interrupt.s" 2
 
-global ADC_Interrupt_Service, Enable_Interrupt
+global ADC_Interrupt_Service, Enable_Interrupt, Disable_Interrupt
 global ADCchange_HI, ADCchange_LO
 
 
@@ -11026,4 +11026,8 @@ Enable_Interrupt:
  bsf ((INTCON) and 0FFh), 7, a ; Enable all interrupts
  return
 
+Disable_Interrupt:
+ bcf ((INTCON) and 0FFh), 5, a
+ bcf ((INTCON) and 0FFh), 7, a
+ return
  end

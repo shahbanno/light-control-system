@@ -10963,7 +10963,7 @@ global targ_HI, targ_LO
 extrn UART_Setup, UART_Transmit_Message ; external uart subroutines
 extrn LCD_Setup, LCD_Write_Message, LCD_Write_Hex, LCD_Clear, LCD_delay_ms ; external LCD subroutines
 extrn ADC_Setup, ADC_Read ; external ADC subroutines
-extrn ADC_Interrupt_Service, Enable_Interrupt
+extrn ADC_Interrupt_Service, Enable_Interrupt, Disable_Interrupt
 extrn Keypad_Setup, Keypad_Num_Decode, Keypad_A_Decode
 
 
@@ -11034,6 +11034,10 @@ setup: bcf ((EECON1) and 0FFh), 6, a ; point to Flash program memory
  movwf TRISJ, A
  movlw 0x00
  movwf TRISC, A
+ movlw 0x00
+ movwf TRISH, A
+ movlw 0xFF
+ movf PORTH, A
 
  ; initialise variables
  movlw 0
@@ -11043,14 +11047,10 @@ setup: bcf ((EECON1) and 0FFh), 6, a ; point to Flash program memory
  movlw 0
  movwf PORTC, A
 
-
-
  goto targetInput
 
-
-
 Values_Loading:
- movlw 0x0B ; TODO: REPLACE WITH ACTUAL CALIBRATION
+ movlw 0x05
  movwf one_LED_LO, A
  movlw 0x00
  movwf one_LED_HI, A
@@ -11059,6 +11059,7 @@ Values_Loading:
 
 
 targetInput:
+ call Disable_Interrupt
  movlw 0 ; initialise values
  movwf thou_hi, A
  movwf thou_lo, A
@@ -11129,6 +11130,9 @@ save_input:
  movf targ_LO, W, A ; to remove
 
 
+ call convertToADC
+
+
  ; TODO: CONVERT ((RCON) and 0FFh), 3, a ADC
 
 
@@ -11143,6 +11147,42 @@ save_input:
  call Enable_Interrupt
  goto feedbackloop
 
+
+convertToADC:
+ movf targ_LO, W, A ; ((RCON) and 0FFh), 3, a REMOVE
+ movf targ_HI, W, A ; ((RCON) and 0FFh), 3, a REMOVE
+
+
+ movff targ_HI, ARG1H, A
+ movff targ_LO, ARG1L, A
+
+ movlw 0x0C
+ movwf ARG2L, A
+ movlw 0x00
+ movwf ARG2H, A
+
+ call sixteen_multiply
+
+ movf RES0, W, A ; ((RCON) and 0FFh), 3, a REMOVE
+ movf RES1, W, A ; ((RCON) and 0FFh), 3, a REMOVE
+
+ movff RES0, Q1_LO, A
+ movff RES1, Q1_HI, A
+
+ movlw 1
+ movwf Q2_LO, A
+ movlw 0
+ movwf Q2_HI, A
+
+ call sixteen_sub
+
+ movff Q1_LO, targ_LO, A
+ movff Q1_HI, targ_HI, A
+
+
+ movf targ_LO, W, A ; ((RCON) and 0FFh), 3, a REMOVE
+ movf targ_HI, W, A ; ((RCON) and 0FFh), 3, a REMOVE
+ return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -11274,9 +11314,9 @@ sum:
 feedbackloop:
 
 ;; ; FOR TESTING
-; movlw 111111B
+; movlw 1111B
 ; movwf PORTC, A
-;
+
 
 
  ; if any digit in amount to change is non-zero, branch to changing LEDs
@@ -11292,11 +11332,11 @@ keypadCheck:
      ; disbale interrupts, branch back to targetInput
 
 
-; call Keypad_A_Decode
-; movwf decoded_value, A
-; movlw 0xA
-; subwf decoded_value, 0, 0
-; bz targetInput ; TODO: consider disabling interrupt?
+ call Keypad_A_Decode
+ movwf decoded_value, A
+ movlw 0xA
+ subwf decoded_value, 0, 0
+ bz targetInput
 
 
  bra feedbackloop
