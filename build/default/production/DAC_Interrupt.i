@@ -10999,10 +10999,21 @@ ADC_Interrupt_Service:
  movff targ_HI, Q1_HI
  movff targ_LO, Q1_LO
 
+ movf Q1_HI, W, A ; to remove
+ movf Q1_LO, W, A ; to remove
+ movf Q2_HI, W, A ; to remove
+ movf Q2_LO, W, A ; to remove
+
  call sixteen_sub
+
+ movf Q1_HI, W, A ; to remove
+ movf Q1_LO, W, A ; to remove
 
  movff Q1_HI, ADCchange_HI
  movff Q1_LO, ADCchange_LO
+
+ movf ADCchange_HI, W, A ; to remove
+ movf ADCchange_LO, W, A ; to remove
 
 
  bcf ((INTCON) and 0FFh), 2, a ; clear interrupt flag

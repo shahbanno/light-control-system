@@ -10959,9 +10959,10 @@ ENDM
 # 2 "operations.s" 2
 
 
-global sixteen_sub, twobyte_negative
+global sixteen_sub, twobyte_negative, sixteen_multiply
 
 global Q2_LO, Q1_LO, Q2_HI, Q1_HI, invert_HI, invert_LO
+global ARG1H, ARG1L, ARG2H, ARG2L, RES0, RES1, RES2, RES3
 
 psect udata_acs ; reserve data space in access ram
 

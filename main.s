@@ -90,17 +90,30 @@ setup:	bcf	CFGS	; point to Flash program memory
 	goto	targetInput
 		
 	
-    
-	return 
-	
+    	
 Values_Loading:
-	movlw	0x0A		; TODO: REPLACE WITH ACTUAL CALIBRATION
+	movlw	0x0B		; TODO: REPLACE WITH ACTUAL CALIBRATION
 	movwf	one_LED_LO, A
 	movlw	0x00
 	movwf	one_LED_HI, A
 	
 	return
 	
+
+targetInput:	
+	movlw 0	; initialise values
+	movwf thou_hi, A
+	movwf thou_lo, A
+	movwf hun_hi, A
+	movwf hun_lo, A
+	movwf ten, A
+	movwf unit, A
+    
+    
+	lfsr	0, first_loc ; set up inrecementation
+	movlw	0
+	movwf	counter, A
+	call	inputDigitsLoop		
 	
 inputDigitsLoop:
 	call	Keypad_Num_Decode
@@ -122,42 +135,14 @@ inputDigitsLoop:
 	incf	counter, A ; increment the counter 
 	movf	counter, W, A
 	movf	decoded_value, 0, 0 ; move decoded val to W to write it
-	
-	; CONVERT THE  NUMERICAL DIGIT TO ASCII
-	
-	
-	
-;		    movf	decoded_value, 0, 0
-;		    addlw	0x30
-;		    movwf	FSR2, A
-;		    movlw	0x1
-;		    call	LCD_Write_Message
-	
-	;call	LCD_Write_Hex ; write to LCD 
-	
-	
-	
-	
+
 	
 	movlw	0xFFFF
 	call	LCD_delay_ms
 	
 	bra	inputDigitsLoop
 	
-targetInput:	
-	movlw 0	; initialise values
-	movwf thou_hi, A
-	movwf thou_lo, A
-	movwf hun_hi, A
-	movwf hun_lo, A
-	movwf ten, A
-	movwf unit, A
-    
-    
-	lfsr	0, first_loc ; set up inrecementation
-	movlw	0
-	movwf	counter, A
-	call	inputDigitsLoop		
+	
 		
 combineInput:	
     	; THIS JUST RECALLS WHAT  WAS INPUT USING POSTINC
@@ -330,6 +315,12 @@ sum:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 feedbackloop:
 	
+;;	; FOR TESTING 
+;	movlw	111111B
+;	movwf	PORTC, A
+;	
+    
+    
 	; if any digit in amount to change is non-zero, branch to changing LEDs 
 	
 	movf	ADCchange_LO, W, A		; TO UNCOMMENT
@@ -343,7 +334,6 @@ keypadCheck:
 	    ; disbale interrupts, branch back to targetInput    
    
 	    
-;	    
 ;	call	Keypad_A_Decode
 ;	movwf	decoded_value, A
 ;	movlw	0xA
@@ -378,35 +368,31 @@ changeLEDs:
 	
 	movf	num_LEDS_to_change, W, A    ; if no change needed, branch back
 	bz	gobackto_feedback
-	call	rotate_right
+	goto	rotate_right
     
-	movlw	1   ; to remove
     
 	
-	return
 
 rotate_right:	;off
+	movf	PORTC, W, A
+	bz	gobackto_feedback   ; already at 0, cannot turn off more LEDs, just go back bro 
     
 	bcf     STATUS, C, 0
 	rrcf	PORTC, A
 	bcf     STATUS, C, 0
 	decf	num_LEDS_to_change, A
-	movf	num_LEDS_to_change, W, A    ; TO REMOVE
+	movf	num_LEDS_to_change, W, A    
 
 	bz	gobackto_feedback
 	bra	rotate_right
-	movlw	1   ; to remove
 	
 numIsPositive:
 	call	find_num_LEDS
 
-	movf	num_LEDS_to_change, W, A ; to  remove
-	    
 	movf	num_LEDS_to_change, W, A  ; if no change needed, branch back
 	bz	gobackto_feedback
 	
-	call	rotate_left
-	movlw	1   ; to remove
+	goto	rotate_left
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 specialCase:	;IF PORTC IS 0, THEN SIMPLY ADD 1. THEN THE ROTATE THING SHOULD WORK 
@@ -414,7 +400,6 @@ specialCase:	;IF PORTC IS 0, THEN SIMPLY ADD 1. THEN THE ROTATE THING SHOULD WOR
 	movwf	PORTC, A
 	decf	num_LEDS_to_change, A
 	bra	continue_Rotate
-	movlw	1   ; to remove
 rotate_left:	; on
     
 	; IF PORT C IS FF, THEN DONT DO THIS
@@ -433,6 +418,10 @@ continue_Rotate:
     
     
 rotate_Loop:
+	movlw	0xFF
+	subwf	PORTC, 0, 0 
+	bz	gobackto_feedback   ; cant turn on more LEDs, at max
+    
 	bcf     STATUS, C, 0
 	rlcf	PORTC, A
 	bcf     STATUS, C, 0  ; Clear carry (as rotating, and rotate moves carry into LSB) 
@@ -446,7 +435,6 @@ rotate_Loop:
 	bz	gobackto_feedback ; finished changing LEDs
 	bra	rotate_Loop
 	
-	movlw	1   ; to remove
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
 
@@ -477,7 +465,6 @@ loop:
 	
 	return
 	
-	movlw	1   ; to remove
 	
 gobackto_feedback:
 	; reset the ADC change (needed if LEDs were serviced)
@@ -487,5 +474,4 @@ gobackto_feedback:
 	movwf	ADCchange_HI, A
 	
 	goto	keypadCheck
-	movlw	1   ; to remove
 end	rst
