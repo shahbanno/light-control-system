@@ -11035,9 +11035,9 @@ setup: bcf ((EECON1) and 0FFh), 6, a ; point to Flash program memory
  movlw 0x00
  movwf TRISC, A
  movlw 0x00
- movwf TRISH, A
- movlw 0xFF
- movf PORTH, A
+ movwf TRISF, A
+
+ SETF PORTF, A
 
  ; initialise variables
  movlw 0
@@ -11332,11 +11332,11 @@ keypadCheck:
      ; disbale interrupts, branch back to targetInput
 
 
- call Keypad_A_Decode
- movwf decoded_value, A
- movlw 0xA
- subwf decoded_value, 0, 0
- bz targetInput
+; call Keypad_A_Decode
+; movwf decoded_value, A
+; movlw 0xA
+; subwf decoded_value, 0, 0
+; bz targetInput
 
 
  bra feedbackloop

@@ -77,9 +77,9 @@ setup:	bcf	CFGS	; point to Flash program memory
 	movlw	0x00
 	movwf	TRISC, A
 	movlw	0x00
-	movwf	TRISH, A
-	movlw	0xFF
-	movf	PORTH, A
+	movwf	TRISF, A
+	
+	SETF	PORTF, A
 	
 	; initialise  variables
 	movlw	0
@@ -379,7 +379,7 @@ keypadCheck:
 ;	movlw	0xA
 ;	subwf	decoded_value, 0, 0
 ;	bz	targetInput	   
-;    
+    
 
 	bra feedbackloop
 	

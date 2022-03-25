@@ -62,6 +62,7 @@ ADC_Interrupt_Service:
 	retfie	f		; fast return from interrupt
 	
 Enable_Interrupt:
+
 	movlw	10000111B	; Set timer0 to 16-bit, Fosc/4/256
 	movwf	T0CON, A	; = 62.5KHz clock rate, approx 1sec rollover
 	bsf	TMR0IE		; Enable timer0 interrupt
@@ -69,6 +70,9 @@ Enable_Interrupt:
 	return
 
 Disable_Interrupt:
+	movlw	0	
+	movwf	T0CON, A
+	
 	bcf	TMR0IE
 	bcf	GIE
 	return
